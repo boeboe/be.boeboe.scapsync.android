@@ -1,0 +1,14 @@
+<resources>
+
+    <string name="app_name">CVE_Tool</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">CVE Tool</string>
+    
+    <string name="cvs_basic_search">Basic Search</string>
+    <string name="cvs_advanced_search">Advanced Search</string>
+    
+    <string name="title_activity_basic_search">Basic CVE Search</string>
+    <string name="do_basic_search">DoBasicSearch</string>
+    <string name="search_term_hint">Fill in here</string>
+
+</resources>
