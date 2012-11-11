@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="be.boeboe.cve_tool"
+    package="be.boeboe.scapsync.android"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -24,7 +24,7 @@
             android:label="@string/title_activity_basic_search" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="be.boeboe.cve_tool.MainActivity" />
+                android:value="be.boeboe.scapsync.android.MainActivity" />
         </activity>
     </application>
 

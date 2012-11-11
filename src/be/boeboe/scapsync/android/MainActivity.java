@@ -1,4 +1,4 @@
-package be.boeboe.cve_tool;
+package be.boeboe.scapsync.android;
 
 import android.app.Activity;
 import android.content.Intent;
