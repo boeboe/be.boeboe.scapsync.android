@@ -20,7 +20,13 @@
 		        android:layout_weight="1"
             android:gravity="center"
 		        android:contentDescription="@string/cvs_search" />
-		 
+     </TableRow>
+     
+     <TableRow android:id="@+id/TableRow02"
+               android:layout_gravity="center_horizontal"
+               android:layout_width="fill_parent"
+               android:layout_height="fill_parent"
+               android:layout_weight="1" >
 		      <Button
 		        android:id="@+id/stats_button"
 		        android:layout_width="fill_parent"
@@ -29,12 +35,12 @@
 		        android:drawableLeft="@drawable/stats"
 		        android:layout_weight="1"
             android:gravity="center"
-		        android:contentDescription="@string/cvs_stats"/>
+		        android:contentDescription="@string/cvs_stats" />
      </TableRow>
      
-     <TableRow android:id="@+id/TableRow02"
-     	         android:layout_gravity="center_horizontal"
-     	         android:layout_width="fill_parent"
+     <TableRow android:id="@+id/TableRow03"
+               android:layout_gravity="center_horizontal"
+               android:layout_width="fill_parent"
                android:layout_height="fill_parent"
                android:layout_weight="1" >
 	   
@@ -46,8 +52,14 @@
 		        android:drawableLeft="@drawable/user"
 	          android:layout_weight="1"
             android:gravity="center"
-		        android:contentDescription="@string/cvs_profiles"/>
-		 
+		        android:contentDescription="@string/cvs_profiles" />
+     </TableRow>
+     
+     <TableRow android:id="@+id/TableRow04"
+               android:layout_gravity="center_horizontal"
+               android:layout_width="fill_parent"
+               android:layout_height="fill_parent"
+               android:layout_weight="1" >	 
 		     <Button
 		        android:id="@+id/feeds_button"
 		        android:layout_width="fill_parent"
@@ -56,8 +68,7 @@
 		        android:drawableLeft="@drawable/rss"
 	          android:layout_weight="1"
 	          android:gravity="center"
-		        android:contentDescription="@string/cvs_feeds"/>
+		        android:contentDescription="@string/cvs_feeds" />
      </TableRow>
- 
 </TableLayout>
 

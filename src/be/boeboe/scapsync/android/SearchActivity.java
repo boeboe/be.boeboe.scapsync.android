@@ -13,7 +13,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class BasicSearchActivity extends Activity {
+public class SearchActivity extends Activity {
   private ImageButton fSearchButton;
   private TextView fSearchTerm;
   
@@ -44,9 +44,8 @@ public class BasicSearchActivity extends Activity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_basic_search);
-    getActionBar().setDisplayHomeAsUpEnabled(true);
-    
+    setContentView(R.layout.activity_search);
+
     fSearchButton = (ImageButton) findViewById(R.id.do_basic_search);
     fSearchTerm = (TextView) findViewById(R.id.search_term);
     
@@ -71,7 +70,7 @@ public class BasicSearchActivity extends Activity {
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.activity_basic_search, menu);
+    getMenuInflater().inflate(R.menu.activity_search, menu);
     return true;
   }
   
