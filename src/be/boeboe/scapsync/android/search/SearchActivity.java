@@ -1,5 +1,9 @@
-package be.boeboe.scapsync.android;
+package be.boeboe.scapsync.android.search;
 
+import be.boeboe.scapsync.android.R;
+import be.boeboe.scapsync.android.R.id;
+import be.boeboe.scapsync.android.R.layout;
+import be.boeboe.scapsync.android.R.menu;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;

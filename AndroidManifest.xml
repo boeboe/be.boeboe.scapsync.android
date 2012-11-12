@@ -20,28 +20,28 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SearchActivity"
+            android:name=".search.SearchActivity"
             android:label="@string/title_activity_search" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="be.boeboe.scapsync.android.MainActivity" />
         </activity>
         <activity
-            android:name=".StatsActivity"
+            android:name=".stats.StatsActivity"
             android:label="@string/title_activity_stats" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="be.boeboe.scapsync.android.MainActivity" />
         </activity>
         <activity
-            android:name=".ProfilesActivity"
+            android:name=".profiles.ProfilesActivity"
             android:label="@string/title_activity_profiles" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="be.boeboe.scapsync.android.MainActivity" />
         </activity>
         <activity
-            android:name=".FeedsActivity"
+            android:name=".feeds.FeedsActivity"
             android:label="@string/title_activity_feeds" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

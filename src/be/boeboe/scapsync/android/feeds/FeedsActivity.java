@@ -1,4 +1,4 @@
-package be.boeboe.scapsync.android;
+package be.boeboe.scapsync.android.feeds;
 
 import android.app.Activity;
 

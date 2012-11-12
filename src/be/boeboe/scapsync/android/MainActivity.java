@@ -1,5 +1,9 @@
 package be.boeboe.scapsync.android;
 
+import be.boeboe.scapsync.android.feeds.FeedsActivity;
+import be.boeboe.scapsync.android.profiles.ProfilesActivity;
+import be.boeboe.scapsync.android.search.SearchActivity;
+import be.boeboe.scapsync.android.stats.StatsActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
