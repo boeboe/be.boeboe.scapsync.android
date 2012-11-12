@@ -5,12 +5,12 @@
     <string name="title_activity_main">SCAP Tool</string>
     
     <string name="cvs_search">Search</string>
-    <string name="cvs_stats">Stats</string>
+    <string name="cvs_stats">Statistics</string>
     <string name="cvs_profiles">Profiles</string>
     <string name="cvs_feeds">Feeds</string>
     
     <string name="title_activity_search">Search</string>
-    <string name="title_activity_stats">Stats</string>
+    <string name="title_activity_stats">Statistics</string>
     <string name="title_activity_profiles">Profiles</string>
     <string name="title_activity_feeds">Feeds</string>
 
