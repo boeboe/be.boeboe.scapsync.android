@@ -16,7 +16,7 @@
 		        android:layout_width="fill_parent"
 		        android:layout_height="fill_parent"
 		        android:text="@string/cvs_search"
-		        android:drawableLeft="@drawable/download"
+		        android:drawableLeft="@drawable/search"
 		        android:layout_weight="1"
             android:gravity="center"
 		        android:contentDescription="@string/cvs_search" />
@@ -32,7 +32,7 @@
 		        android:layout_width="fill_parent"
 		        android:layout_height="fill_parent"
 		        android:text="@string/cvs_stats"
-		        android:drawableLeft="@drawable/stats"
+		        android:drawableLeft="@drawable/chart"
 		        android:layout_weight="1"
             android:gravity="center"
 		        android:contentDescription="@string/cvs_stats" />
@@ -49,7 +49,7 @@
 		        android:layout_width="fill_parent"
 		        android:layout_height="fill_parent"
 		        android:text="@string/cvs_profiles"
-		        android:drawableLeft="@drawable/user"
+		        android:drawableLeft="@drawable/users_group"
 	          android:layout_weight="1"
             android:gravity="center"
 		        android:contentDescription="@string/cvs_profiles" />

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
@@ -8,7 +9,7 @@
      <TableRow android:id="@+id/TableRow01"
                android:layout_gravity="center_horizontal"
                android:layout_width="fill_parent"
-               android:layout_height="wrap_content"
+               android:layout_height="fill_parent"
                android:padding="10dip"
                android:layout_weight="1">
           <Button
@@ -16,7 +17,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:text="@string/cvs_search"
-            android:drawableLeft="@drawable/download"
+            android:drawableStart="@drawable/search"
             android:layout_weight="1"
             android:gravity="center"
             android:padding="10dip"
@@ -27,7 +28,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:text="@string/cvs_stats"
-            android:drawableLeft="@drawable/stats"
+            android:drawableStart="@drawable/chart"
             android:layout_weight="1"
             android:gravity="center"
             android:padding="10dip"
@@ -46,7 +47,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:text="@string/cvs_profiles"
-            android:drawableLeft="@drawable/user"
+            android:drawableLeft="@drawable/users_group"
             android:layout_weight="1"
             android:gravity="center"
             android:padding="10dip"
