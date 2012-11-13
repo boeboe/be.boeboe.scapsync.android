@@ -1,10 +1,7 @@
 package be.boeboe.scapsync.android.search;
 
-import be.boeboe.scapsync.android.R;
-import be.boeboe.scapsync.android.R.id;
-import be.boeboe.scapsync.android.R.layout;
-import be.boeboe.scapsync.android.R.menu;
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.text.Editable;
@@ -16,15 +13,20 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import be.boeboe.scapsync.android.R;
+import be.boeboe.scapsync.rest.ScapSyncSearcher;
+import be.boeboe.scapsync.rest.interfaces.IScapSyncSearchResult;
 
 public class SearchActivity extends Activity {
   private ImageButton fSearchButton;
   private TextView fSearchTerm;
+  private TextView fSearchResult;
   
   private OnClickListener searchButtonListener = new OnClickListener() {
     @Override
     public void onClick(View v) {
       System.out.println("Going to search for: " + fSearchTerm.getText());
+      new SearchTask().execute(fSearchTerm.getText().toString());
     }
   };
   
@@ -52,9 +54,12 @@ public class SearchActivity extends Activity {
 
     fSearchButton = (ImageButton) findViewById(R.id.do_basic_search);
     fSearchTerm = (TextView) findViewById(R.id.search_term);
+    fSearchResult = (TextView) findViewById(R.id.search_result);
     
     fSearchButton.setOnClickListener(searchButtonListener);
     fSearchTerm.addTextChangedListener(textWatcher);
+    
+    fSearchResult.setText("<no results yet>");
   }
 
   @Override
@@ -88,4 +93,24 @@ public class SearchActivity extends Activity {
     return super.onOptionsItemSelected(item);
   }
 
+  private class SearchTask extends AsyncTask<String, Integer, String> {
+
+    @Override
+    protected String doInBackground(String... params) {
+      String resultStr = "";
+      if (params != null && params.length > 0 && params[0] != null) {
+        String searchItem = params[0];
+        System.out.println("Going to REST Search for " + searchItem);
+        ScapSyncSearcher searcher = new ScapSyncSearcher();
+        IScapSyncSearchResult[] result = searcher.searchAll(searchItem);
+        System.out.println("REST Search result: " + result[0].getSummaryText());
+        resultStr = result[0].toString();
+      }
+      return resultStr;
+    }
+    
+    protected void onPostExecute(String result) {
+      fSearchResult.setText(result);
+    }
+  }
 }

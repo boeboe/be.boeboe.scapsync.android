@@ -6,64 +6,69 @@
     android:padding="10dip"
     android:stretchColumns="true" >
     
-     <TableRow android:id="@+id/TableRow01"
+	   <TableRow android:id="@+id/TableRow01"
                android:layout_gravity="center_horizontal"
-               android:layout_width="fill_parent"
-               android:layout_height="fill_parent"
-               android:padding="10dip"
+	   	         android:layout_width="fill_parent"
+               android:layout_height="wrap_content"
                android:layout_weight="1">
-          <Button
-            android:id="@+id/search_button"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:text="@string/cvs_search"
-            android:drawableStart="@drawable/search"
-            android:layout_weight="1"
+		      <Button
+		        android:id="@+id/search_button"
+		        android:layout_width="fill_parent"
+		        android:layout_height="fill_parent"
+		        android:text="@string/cvs_search"
+		        android:drawableLeft="@drawable/search"
+		        android:layout_weight="1"
             android:gravity="center"
-            android:padding="10dip"
-            android:contentDescription="@string/cvs_search" />
-     
-          <Button
-            android:id="@+id/stats_button"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:text="@string/cvs_stats"
-            android:drawableStart="@drawable/chart"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="10dip"
-            android:contentDescription="@string/cvs_stats"/>
+		        android:contentDescription="@string/cvs_search" />
      </TableRow>
      
      <TableRow android:id="@+id/TableRow02"
                android:layout_gravity="center_horizontal"
                android:layout_width="fill_parent"
                android:layout_height="fill_parent"
-               android:padding="10dip"
                android:layout_weight="1" >
-     
-         <Button
-            android:id="@+id/profiles_button"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:text="@string/cvs_profiles"
-            android:drawableLeft="@drawable/users_group"
-            android:layout_weight="1"
+		      <Button
+		        android:id="@+id/stats_button"
+		        android:layout_width="fill_parent"
+		        android:layout_height="fill_parent"
+		        android:text="@string/cvs_stats"
+		        android:drawableLeft="@drawable/chart"
+		        android:layout_weight="1"
             android:gravity="center"
-            android:padding="10dip"
-            android:contentDescription="@string/cvs_profiles"/>
-     
-         <Button
-            android:id="@+id/feeds_button"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:text="@string/cvs_feeds"
-            android:drawableLeft="@drawable/rss"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="10dip"
-            android:contentDescription="@string/cvs_feeds"/>
+		        android:contentDescription="@string/cvs_stats" />
      </TableRow>
- 
+     
+     <TableRow android:id="@+id/TableRow03"
+               android:layout_gravity="center_horizontal"
+               android:layout_width="fill_parent"
+               android:layout_height="fill_parent"
+               android:layout_weight="1" >
+	   
+		     <Button
+		        android:id="@+id/profiles_button"
+		        android:layout_width="fill_parent"
+		        android:layout_height="fill_parent"
+		        android:text="@string/cvs_profiles"
+		        android:drawableLeft="@drawable/users_group"
+	          android:layout_weight="1"
+            android:gravity="center"
+		        android:contentDescription="@string/cvs_profiles" />
+     </TableRow>
+     
+     <TableRow android:id="@+id/TableRow04"
+               android:layout_gravity="center_horizontal"
+               android:layout_width="fill_parent"
+               android:layout_height="fill_parent"
+               android:layout_weight="1" >	 
+		     <Button
+		        android:id="@+id/feeds_button"
+		        android:layout_width="fill_parent"
+		        android:layout_height="fill_parent"
+		        android:text="@string/cvs_feeds"
+		        android:drawableLeft="@drawable/rss"
+	          android:layout_weight="1"
+	          android:gravity="center"
+		        android:contentDescription="@string/cvs_feeds" />
+     </TableRow>
 </TableLayout>
 

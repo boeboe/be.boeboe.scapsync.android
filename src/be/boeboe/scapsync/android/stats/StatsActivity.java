@@ -70,9 +70,6 @@ public class StatsActivity extends Activity {
     renderer.setMargins(new int[] {30, 30, 30, 30});
     SimpleSeriesRenderer r = new SimpleSeriesRenderer();
     r.setColor(Color.RED);
-    r.setGradientEnabled(true);
-    r.setGradientStart(-200, Color.BLUE);
-    r.setGradientStop(200, 0xFFFFFFFF);
     renderer.addSeriesRenderer(r);
     return renderer;
   }
