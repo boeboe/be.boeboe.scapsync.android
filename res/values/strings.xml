@@ -14,7 +14,11 @@
     <string name="title_activity_profiles">Profiles</string>
     <string name="title_activity_feeds">Feeds</string>
 
-    <string name="do_basic_search">DoBasicSearch</string>
+    <string name="search_button">Search</string>
+    <string name="reset_button">Reset</string>
+    
+    <string name="search_item_seperator">Search Item</string>
+    <string name="search_filter_seperator">Search Filter</string>
     <string name="search_term_hint">Fill in here</string>
 
 

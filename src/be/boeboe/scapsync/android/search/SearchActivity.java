@@ -11,14 +11,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.TextView;
 import be.boeboe.scapsync.android.R;
 import be.boeboe.scapsync.rest.ScapSyncSearcher;
 import be.boeboe.scapsync.rest.interfaces.IScapSyncSearchResult;
 
 public class SearchActivity extends Activity {
-  private ImageButton fSearchButton;
+  private Button fSearchButton;
+  private Button fResetButton;
   private TextView fSearchTerm;
   private TextView fSearchResult;
   
@@ -27,6 +28,14 @@ public class SearchActivity extends Activity {
     public void onClick(View v) {
       System.out.println("Going to search for: " + fSearchTerm.getText());
       new SearchTask().execute(fSearchTerm.getText().toString());
+    }
+  };
+
+  private OnClickListener resetButtonListener = new OnClickListener() {
+    @Override
+    public void onClick(View v) {
+      fSearchTerm.setText("");
+      fSearchResult.setText("<no results yet>");
     }
   };
   
@@ -52,11 +61,13 @@ public class SearchActivity extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_search);
 
-    fSearchButton = (ImageButton) findViewById(R.id.do_basic_search);
+    fSearchButton = (Button) findViewById(R.id.search_button);
+    fResetButton = (Button) findViewById(R.id.reset_button);
     fSearchTerm = (TextView) findViewById(R.id.search_term);
     fSearchResult = (TextView) findViewById(R.id.search_result);
     
     fSearchButton.setOnClickListener(searchButtonListener);
+    fResetButton.setOnClickListener(resetButtonListener);
     fSearchTerm.addTextChangedListener(textWatcher);
     
     fSearchResult.setText("<no results yet>");

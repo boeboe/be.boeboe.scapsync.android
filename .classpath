@@ -3,11 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
-	<classpathentry kind="lib" path="/home/boeboe/Java/achartengine-1.0.0.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/home/boeboe/Java/achartengine-1.0.0-javadocs.zip!/"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="lib" path="/home/users/vanbosb/git/ExtraLibs/achartengine-1.0.0.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
