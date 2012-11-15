@@ -61,8 +61,8 @@ public class StatsActivity extends Activity {
     renderer.setLabelsTextSize(15);
     renderer.setLegendTextSize(15);
     renderer.setBarSpacing(1);
-    //renderer.setBackgroundColor(Color.WHITE);
-    renderer.setMarginsColor(Color.WHITE);
+    renderer.setLabelsColor(Color.WHITE);
+    renderer.setMarginsColor(Color.BLACK);
     renderer.addXTextLabel(1, "Configurations");
     renderer.addXTextLabel(2, "Products");
     renderer.addXTextLabel(3, "Vulnerabilities");

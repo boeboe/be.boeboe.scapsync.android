@@ -50,15 +50,34 @@
         android:layout_width="wrap_content"
         android:background="@drawable/gradient"
         android:layout_height="1dp" />
-
-    <TextView android:id="@+id/search_result"
-        android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:textColor="@android:color/white"
-        android:padding="5dp"
-        android:textSize="6pt"
-        android:layout_weight="1" />
     
+    <RadioGroup android:id="@+id/filter_select"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        
+		    <RadioButton android:id="@+id/filter_all"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/filter_all"
+		        android:checked="true" />
+		    
+		    <RadioButton android:id="@+id/filter_cve"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/filter_cve" />
+		    
+		    <RadioButton android:id="@+id/filter_cpe"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/filter_cpe" />
+		    
+		    <RadioButton android:id="@+id/filter_cwe"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/filter_cwe" />
+		</RadioGroup>
+
     <LinearLayout 
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" 

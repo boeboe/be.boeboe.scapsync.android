@@ -1,7 +1,7 @@
 package be.boeboe.scapsync.android.search;
 
 import android.app.Activity;
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.text.Editable;
@@ -12,49 +12,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import be.boeboe.scapsync.android.R;
-import be.boeboe.scapsync.rest.ScapSyncSearcher;
-import be.boeboe.scapsync.rest.interfaces.IScapSyncSearchResult;
 
 public class SearchActivity extends Activity {
   private Button fSearchButton;
   private Button fResetButton;
   private TextView fSearchTerm;
-  private TextView fSearchResult;
+
+  private RadioGroup fFilterGroup;
+  private int fFilterSelected;
   
-  private OnClickListener searchButtonListener = new OnClickListener() {
-    @Override
-    public void onClick(View v) {
-      System.out.println("Going to search for: " + fSearchTerm.getText());
-      new SearchTask().execute(fSearchTerm.getText().toString());
-    }
-  };
-
-  private OnClickListener resetButtonListener = new OnClickListener() {
-    @Override
-    public void onClick(View v) {
-      fSearchTerm.setText("");
-      fSearchResult.setText("<no results yet>");
-    }
-  };
-  
-  private final TextWatcher textWatcher = new TextWatcher() {
-
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-      updateUI();
-    }
-
-  };
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -64,13 +33,13 @@ public class SearchActivity extends Activity {
     fSearchButton = (Button) findViewById(R.id.search_button);
     fResetButton = (Button) findViewById(R.id.reset_button);
     fSearchTerm = (TextView) findViewById(R.id.search_term);
-    fSearchResult = (TextView) findViewById(R.id.search_result);
+
+    fFilterGroup = (RadioGroup) findViewById(R.id.filter_select);
+    fFilterSelected = fFilterGroup.getCheckedRadioButtonId();
     
     fSearchButton.setOnClickListener(searchButtonListener);
     fResetButton.setOnClickListener(resetButtonListener);
     fSearchTerm.addTextChangedListener(textWatcher);
-    
-    fSearchResult.setText("<no results yet>");
   }
 
   @Override
@@ -104,24 +73,51 @@ public class SearchActivity extends Activity {
     return super.onOptionsItemSelected(item);
   }
 
-  private class SearchTask extends AsyncTask<String, Integer, String> {
+  private OnClickListener searchButtonListener = new OnClickListener() {
+    @Override
+    public void onClick(View v) {
+      System.out.println("[1] Going to search for: " + fSearchTerm.getText());
+      Intent searchListIntent = new Intent(getApplicationContext(), SearchListActivity.class);
+      searchListIntent.putExtra(SearchListActivity.SEARCH_TERM, fSearchTerm.getText().toString());
+      searchListIntent.putExtra(SearchListActivity.SEARCH_FILTER, getFilterName(fFilterSelected));
+      startActivity(searchListIntent);
+    }
+  };
+
+  private OnClickListener resetButtonListener = new OnClickListener() {
+    @Override
+    public void onClick(View v) {
+      fSearchTerm.setText("");
+    }
+  };
+  
+  private final TextWatcher textWatcher = new TextWatcher() {
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    }
 
     @Override
-    protected String doInBackground(String... params) {
-      String resultStr = "";
-      if (params != null && params.length > 0 && params[0] != null) {
-        String searchItem = params[0];
-        System.out.println("Going to REST Search for " + searchItem);
-        ScapSyncSearcher searcher = new ScapSyncSearcher();
-        IScapSyncSearchResult[] result = searcher.searchAll(searchItem);
-        System.out.println("REST Search result: " + result[0].getSummaryText());
-        resultStr = result[0].toString();
-      }
-      return resultStr;
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
     }
-    
-    protected void onPostExecute(String result) {
-      fSearchResult.setText(result);
+
+    @Override
+    public void afterTextChanged(Editable s) {
+      updateUI();
+    }
+  };
+  
+  private String getFilterName(int resourceId) {
+    switch (resourceId) {
+    case R.id.filter_all:
+      return SearchListActivity.SEARCH_FILTER_ALL;
+    case R.id.filter_cpe:
+      return SearchListActivity.SEARCH_FILTER_CPE;
+    case R.id.filter_cve:
+      return SearchListActivity.SEARCH_FILTER_CVE;
+    case R.id.filter_cwe:
+      return SearchListActivity.SEARCH_FILTER_CWE;
+    default:
+      return SearchListActivity.SEARCH_FILTER_ALL;
     }
   }
 }
