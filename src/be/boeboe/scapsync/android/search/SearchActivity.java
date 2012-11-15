@@ -88,6 +88,7 @@ public class SearchActivity extends Activity {
     @Override
     public void onClick(View v) {
       fSearchTerm.setText("");
+      fFilterGroup.check(R.id.filter_all);
     }
   };
   

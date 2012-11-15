@@ -22,5 +22,6 @@
   <string name="filter_cpe">CPE Only</string>
   <string name="filter_cve">CVE Only</string>
   <string name="filter_cwe">CWE Only</string>
+  <string name="to_search_details">Navigate to search result details</string>
 
 </resources>
