@@ -10,7 +10,8 @@
                android:layout_height="fill_parent"
                android:layout_alignParentRight="true"
                android:layout_centerVertical="true"
-               android:contentDescription="@string/to_search_details" />
+               android:contentDescription="@string/to_search_details" 
+               android:onClick="searchResultClicked" />
     
 	  <TextView android:id="@+id/result_id"
 	            android:layout_width="wrap_content"

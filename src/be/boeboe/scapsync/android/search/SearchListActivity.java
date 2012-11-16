@@ -5,8 +5,10 @@ import java.util.Arrays;
 
 import android.annotation.SuppressLint;
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.ListView;
 import be.boeboe.scapsync.android.R;
 import be.boeboe.scapsync.rest.ScapSyncSearcher;
 import be.boeboe.scapsync.rest.interfaces.IScapSyncSearchResult;
@@ -20,6 +22,8 @@ public class SearchListActivity extends ListActivity {
   public static String SEARCH_FILTER_CWE = "search_filter_cwe";
 
   private SearchAdapter fSearchAdapter;
+  private ListView fListView;
+  private ProgressDialog fProgressDialog;
   private String fSearchTerm;
   private String fSearchFilter;
 
@@ -33,12 +37,24 @@ public class SearchListActivity extends ListActivity {
     new SearchTask().execute(fSearchTerm);
     fSearchAdapter = new SearchAdapter(this, R.layout.activity_search_list, new ArrayList<IScapSyncSearchResult>());
     setListAdapter(fSearchAdapter);
+    fListView = getListView();
     
-    getListView().setDivider(getResources().getDrawable(R.drawable.gradient));
-    getListView().setDividerHeight(1);
+    fListView.setDivider(getResources().getDrawable(R.drawable.gradient));
+    fListView.setDividerHeight(1);
   }
 
   private class SearchTask extends AsyncTask<String, Integer, IScapSyncSearchResult[]> {
+    
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        fProgressDialog = new ProgressDialog(SearchListActivity.this);
+        fProgressDialog.setMessage("Searching for '" + fSearchTerm + "' ...");
+        fProgressDialog.setIndeterminate(false);
+        fProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        fProgressDialog.setCancelable(true);
+        fProgressDialog.show();
+    }
 
     @Override
     protected IScapSyncSearchResult[] doInBackground(String... params) {
@@ -50,8 +66,10 @@ public class SearchListActivity extends ListActivity {
     }
 
     protected void onPostExecute(IScapSyncSearchResult[] result) {
+      super.onPostExecute(result);
       fSearchAdapter.addAll(new ArrayList<IScapSyncSearchResult>(Arrays.asList(result)));
       fSearchAdapter.notifyDataSetChanged();
+      fProgressDialog.dismiss();
     }
     
     private IScapSyncSearchResult[] doSearch(String searchItem, String filter) {

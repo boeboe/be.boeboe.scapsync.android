@@ -11,14 +11,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import be.boeboe.scapsync.android.R;
 
 public class SearchActivity extends Activity {
-  private Button fSearchButton;
-  private Button fResetButton;
+  private ImageView fSearchButton;
+  private ImageView fResetButton;
   private TextView fSearchTerm;
 
   private RadioGroup fFilterGroup;
@@ -30,12 +31,14 @@ public class SearchActivity extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_search);
 
-    fSearchButton = (Button) findViewById(R.id.search_button);
-    fResetButton = (Button) findViewById(R.id.reset_button);
+    fSearchButton = (ImageView) findViewById(R.id.search_button);
+    fResetButton = (ImageView) findViewById(R.id.reset_button);
     fSearchTerm = (TextView) findViewById(R.id.search_term);
 
     fFilterGroup = (RadioGroup) findViewById(R.id.filter_select);
     fFilterSelected = fFilterGroup.getCheckedRadioButtonId();
+    
+    fFilterGroup.setOnCheckedChangeListener(filterSelectedListener);
     
     fSearchButton.setOnClickListener(searchButtonListener);
     fResetButton.setOnClickListener(resetButtonListener);
@@ -73,10 +76,18 @@ public class SearchActivity extends Activity {
     return super.onOptionsItemSelected(item);
   }
 
+  private OnCheckedChangeListener filterSelectedListener = new OnCheckedChangeListener() {
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+      fFilterSelected = checkedId;
+    }
+  };
+
   private OnClickListener searchButtonListener = new OnClickListener() {
     @Override
     public void onClick(View v) {
-      System.out.println("[1] Going to search for: " + fSearchTerm.getText());
+      System.out.println("[1] Going to search for '" + fSearchTerm.getText()
+          + "' with filter " + getFilterName(fFilterSelected));
       Intent searchListIntent = new Intent(getApplicationContext(), SearchListActivity.class);
       searchListIntent.putExtra(SearchListActivity.SEARCH_TERM, fSearchTerm.getText().toString());
       searchListIntent.putExtra(SearchListActivity.SEARCH_FILTER, getFilterName(fFilterSelected));

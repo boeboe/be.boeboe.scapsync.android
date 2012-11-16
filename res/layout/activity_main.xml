@@ -1,74 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:padding="10dip"
-    android:stretchColumns="true" >
+    android:padding="50dip"
+    android:orientation="vertical"
+    android:gravity="center" >
     
-	   <TableRow android:id="@+id/TableRow01"
-               android:layout_gravity="center_horizontal"
-	   	         android:layout_width="fill_parent"
-               android:layout_height="wrap_content"
-               android:layout_weight="1">
-		      <Button
-		        android:id="@+id/search_button"
-		        android:layout_width="fill_parent"
-		        android:layout_height="fill_parent"
-		        android:text="@string/cvs_search"
-		        android:drawableLeft="@drawable/search"
-		        android:layout_weight="1"
-            android:gravity="center"
-		        android:contentDescription="@string/cvs_search" />
-     </TableRow>
-     
-     <TableRow android:id="@+id/TableRow02"
-               android:layout_gravity="center_horizontal"
-               android:layout_width="fill_parent"
-               android:layout_height="fill_parent"
-               android:layout_weight="1" >
-		      <Button
-		        android:id="@+id/stats_button"
-		        android:layout_width="fill_parent"
-		        android:layout_height="fill_parent"
-		        android:text="@string/cvs_stats"
-		        android:drawableLeft="@drawable/chart"
-		        android:layout_weight="1"
-            android:gravity="center"
-		        android:contentDescription="@string/cvs_stats" />
-     </TableRow>
-     
-     <TableRow android:id="@+id/TableRow03"
-               android:layout_gravity="center_horizontal"
-               android:layout_width="fill_parent"
-               android:layout_height="fill_parent"
-               android:layout_weight="1" >
-	   
-		     <Button
-		        android:id="@+id/profiles_button"
-		        android:layout_width="fill_parent"
-		        android:layout_height="fill_parent"
-		        android:text="@string/cvs_profiles"
-		        android:drawableLeft="@drawable/users_group"
-	          android:layout_weight="1"
-            android:gravity="center"
-		        android:contentDescription="@string/cvs_profiles" />
-     </TableRow>
-     
-     <TableRow android:id="@+id/TableRow04"
-               android:layout_gravity="center_horizontal"
-               android:layout_width="fill_parent"
-               android:layout_height="fill_parent"
-               android:layout_weight="1" >	 
-		     <Button
-		        android:id="@+id/feeds_button"
-		        android:layout_width="fill_parent"
-		        android:layout_height="fill_parent"
-		        android:text="@string/cvs_feeds"
-		        android:drawableLeft="@drawable/rss"
-	          android:layout_weight="1"
-	          android:gravity="center"
-		        android:contentDescription="@string/cvs_feeds" />
-     </TableRow>
-</TableLayout>
+	<LinearLayout
+	    android:id="@+id/search_button"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:background="@drawable/image_rounded"
+	    android:clickable="true"
+	    android:layout_margin="10dip"
+	    android:orientation="horizontal" >
+	
+	    <ImageView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_vertical"
+	        android:layout_marginLeft="5dp"
+	        android:src="@drawable/search"
+	        android:contentDescription="@string/cvs_search" />
+	    
+      <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_vertical"
+	        android:layout_margin="5dp"
+	        android:text="@string/cvs_search"
+	        android:textAppearance="?android:attr/textAppearanceLarge" />
+  </LinearLayout>
+
+  <LinearLayout
+      android:id="@+id/stats_button"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/image_rounded"
+      android:clickable="true"
+      android:layout_margin="10dip"
+      android:orientation="horizontal" >
+  
+      <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:layout_marginLeft="5dp"
+          android:src="@drawable/chart"
+          android:contentDescription="@string/cvs_stats" />
+      
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:layout_margin="5dp"
+          android:text="@string/cvs_stats"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
+  </LinearLayout>
+
+  <LinearLayout
+      android:id="@+id/profiles_button"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/image_rounded"
+      android:clickable="true"
+      android:layout_margin="10dip"
+      android:orientation="horizontal" >
+  
+      <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:layout_marginLeft="5dp"
+          android:src="@drawable/users_group"
+          android:contentDescription="@string/cvs_profiles" />
+      
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:layout_margin="5dp"
+          android:text="@string/cvs_profiles"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
+  </LinearLayout>
+  
+  <LinearLayout
+      android:id="@+id/feeds_button"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/image_rounded"
+      android:clickable="true"
+      android:layout_margin="10dip"
+      android:orientation="horizontal" >
+  
+      <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:layout_marginLeft="5dp"
+          android:src="@drawable/rss"
+          android:contentDescription="@string/cvs_feeds" />
+      
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:layout_margin="5dp"
+          android:text="@string/cvs_feeds"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
+  </LinearLayout>
+  
+</LinearLayout>
 

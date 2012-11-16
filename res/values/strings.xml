@@ -15,13 +15,17 @@
 	<string name="reset_button">Reset</string>
 	<string name="search_item_seperator">Search Item</string>
 	<string name="search_filter_seperator">Search Filter</string>
+	<string name="search_order_seperator">Search Order</string>
 	<string name="search_term_hint">Fill in here</string>
 	<string name="hello_world">Hello world!</string>
 	<string name="title_activity_search_list">Search Results</string>
 	<string name="filter_all">No filter</string>
-  <string name="filter_cpe">CPE Only</string>
-  <string name="filter_cve">CVE Only</string>
-  <string name="filter_cwe">CWE Only</string>
+  <string name="filter_cpe">Common Platform Enumeration</string>
+  <string name="filter_cve">Common Vulnerabilities and Exposures</string>
+  <string name="filter_cwe">Common Weakness Enumeration</string>
   <string name="to_search_details">Navigate to search result details</string>
+  <string name="newest_first">Modification Date (Newest First)</string>
+  <string name="oldest_first">Modification Date (Oldest First)</string>
+  <string name="most_relevant">Most Relevant</string>
 
 </resources>
