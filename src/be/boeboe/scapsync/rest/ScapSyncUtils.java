@@ -3,12 +3,21 @@
  */
 package be.boeboe.scapsync.rest;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Array;
+import java.net.URI;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -78,5 +87,41 @@ public class ScapSyncUtils {
       }
     }
     return result;
+  }
+  
+  public static JSONObject execRestGet(URI uri) {
+    final DefaultHttpClient httpClient;
+    httpClient = new DefaultHttpClient();
+    HttpGet request = new HttpGet(uri);
+    request.addHeader("Accept", "application/json");
+
+    try {
+      HttpResponse response = httpClient.execute(request);
+      if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+        throw new RuntimeException("Unexpected server response "
+           + response.getStatusLine() + " for " + request.getRequestLine());
+      }
+      
+      InputStream inputStream = response.getEntity().getContent();
+      InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+      BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+      StringBuilder stringBuilder = new StringBuilder();
+      
+      String line;
+      while ((line = bufferedReader.readLine()) != null) {
+        stringBuilder.append(line);
+      }
+      
+      String output = stringBuilder.toString();
+      JSONObject json = new JSONObject(output);
+      httpClient.getConnectionManager().shutdown();
+      return json;
+    } catch (IOException e) {
+      httpClient.getConnectionManager().shutdown();
+      throw new RuntimeException("Problem reading remote response for " + request.getRequestLine(), e);
+    } catch (JSONException e) {
+      httpClient.getConnectionManager().shutdown();
+      throw new RuntimeException("Problem JSONParsing remote response for " + request.getRequestLine(), e);
+    }
   }
 }

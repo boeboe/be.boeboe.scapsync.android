@@ -5,6 +5,8 @@ package be.boeboe.scapsync.rest.interfaces;
 
 import java.util.Map;
 
+import be.boeboe.scapsync.rest.ScapSyncSearch;
+
 /**
  * Interface that represents a ScapSyncSearcher.
  * @author boeboe
@@ -26,9 +28,9 @@ public interface IScapSyncSearcher {
    * be used to associate checks in configuration assessment tools with
    * statements in configuration best-practice.
    * @param searchItem the item to search for
-   * @return array an array of IScapSyncSearchResult objects
+   * @return 
    */  
-  public IScapSyncSearchResult[] searchCce(String searchItem);
+  public ScapSyncSearch searchCce(String searchItem);
   
   /**
    * Search for CPE's (Common Platform Enumeration).
@@ -38,9 +40,9 @@ public interface IScapSyncSearcher {
    * for checking names against a system, and a description format for
    * binding text and tests to a name. 
    * @param searchItem the item to search for
-   * @return array an array of IScapSyncSearchResult objects
+   * @return 
    */
-  public IScapSyncSearchResult[] searchCpe(String searchItem);
+  public ScapSyncSearch searchCpe(String searchItem);
 
   /**
    * Search for CVE's (Common Vulnerabilities and Exposures) or security
@@ -49,9 +51,8 @@ public interface IScapSyncSearcher {
    * data exchange between security products and provide a baseline index point
    * for evaluating coverage of tools and services.
    * @param searchItem the item to search for
-   * @return array an array of IScapSyncSearchResult objects
    */
-  public IScapSyncSearchResult[] searchCve(String searchItem);
+  public ScapSyncSearch searchCve(String searchItem);
 
   /**
    * Search for CWE's (Common Weakness Enumeration). The Common Weakness
@@ -60,16 +61,16 @@ public interface IScapSyncSearcher {
    * vulnerabilities as they are found in code, design, or system architecture.
    * Each individual CWE represents a single vulnerability type.
    * @param searchItem the item to search for
-   * @return array an array of IScapSyncSearchResult objects
+   * @return 
    */
-  public IScapSyncSearchResult[] searchCwe(String searchItem);
+  public ScapSyncSearch searchCwe(String searchItem);
 
   /**
    * Search for CCE's, CPE's, CVE's and CWE's.
    * @param searchItem the item to search for
-   * @return array an array of IScapSyncSearchResult objects
+   * @return 
    */
-  public IScapSyncSearchResult[] searchAll(String searchItem);
+  public ScapSyncSearch searchAll(String searchItem);
   
   /**
    * Get the full details of a CCE (Common Configuration Enumeration).

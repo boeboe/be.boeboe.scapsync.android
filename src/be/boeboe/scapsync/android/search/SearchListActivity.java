@@ -5,11 +5,13 @@ import java.util.Arrays;
 
 import android.annotation.SuppressLint;
 import android.app.ListActivity;
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ListView;
+import android.widget.Toast;
 import be.boeboe.scapsync.android.R;
+import be.boeboe.scapsync.rest.ScapSyncSearch;
+import be.boeboe.scapsync.rest.ScapSyncSearchListener;
 import be.boeboe.scapsync.rest.ScapSyncSearcher;
 import be.boeboe.scapsync.rest.interfaces.IScapSyncSearchResult;
 
@@ -22,8 +24,8 @@ public class SearchListActivity extends ListActivity {
   public static String SEARCH_FILTER_CWE = "search_filter_cwe";
 
   private SearchAdapter fSearchAdapter;
+  private ArrayList<IScapSyncSearchResult> fResults = new ArrayList<IScapSyncSearchResult>();
   private ListView fListView;
-  private ProgressDialog fProgressDialog;
   private String fSearchTerm;
   private String fSearchFilter;
 
@@ -35,7 +37,7 @@ public class SearchListActivity extends ListActivity {
     fSearchTerm = getIntent().getStringExtra(SEARCH_TERM);
     fSearchFilter = getIntent().getStringExtra(SEARCH_FILTER);
     new SearchTask().execute(fSearchTerm);
-    fSearchAdapter = new SearchAdapter(this, R.layout.activity_search_list, new ArrayList<IScapSyncSearchResult>());
+    fSearchAdapter = new SearchAdapter(this, R.layout.activity_search_list, fResults);
     setListAdapter(fSearchAdapter);
     fListView = getListView();
     
@@ -43,52 +45,53 @@ public class SearchListActivity extends ListActivity {
     fListView.setDividerHeight(1);
   }
 
-  private class SearchTask extends AsyncTask<String, Integer, IScapSyncSearchResult[]> {
-    
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-        fProgressDialog = new ProgressDialog(SearchListActivity.this);
-        fProgressDialog.setMessage("Searching for '" + fSearchTerm + "' ...");
-        fProgressDialog.setIndeterminate(false);
-        fProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        fProgressDialog.setCancelable(true);
-        fProgressDialog.show();
-    }
 
+  private class SearchTask extends AsyncTask<String, IScapSyncSearchResult[], IScapSyncSearchResult[]> {
     @Override
     protected IScapSyncSearchResult[] doInBackground(String... params) {
       if (params != null && params.length > 0 && params[0] != null) {
         String searchItem = params[0];
-        return doSearch(searchItem, fSearchFilter);
+        doSearch(searchItem, fSearchFilter);
       }
       return null;
     }
 
-    protected void onPostExecute(IScapSyncSearchResult[] result) {
-      super.onPostExecute(result);
-      fSearchAdapter.addAll(new ArrayList<IScapSyncSearchResult>(Arrays.asList(result)));
+    @Override
+    protected void onProgressUpdate(IScapSyncSearchResult[]... results) {
+      super.onProgressUpdate(results);
+      fSearchAdapter.addAll(new ArrayList<IScapSyncSearchResult>(Arrays.asList(results[0])));
       fSearchAdapter.notifyDataSetChanged();
-      fProgressDialog.dismiss();
     }
-    
-    private IScapSyncSearchResult[] doSearch(String searchItem, String filter) {
+
+    protected void onPostExecute(IScapSyncSearchResult[] res) {
+      super.onPostExecute(res);
+      Toast.makeText(getApplicationContext(), "Search finished with " + fSearchAdapter.getCount() + " results",
+          Toast.LENGTH_LONG).show();
+    }
+
+    private void doSearch(String searchItem, String filter) {
       ScapSyncSearcher searcher = new ScapSyncSearcher();
-      IScapSyncSearchResult[] results;
+      ScapSyncSearch search;
+      ScapSyncSearchListener searchListener = new ScapSyncSearchListener() {
+        public void resultReceived(IScapSyncSearchResult[] searchResults) {
+          publishProgress(searchResults);
+        }
+      };
+
       if (filter.equals(SEARCH_FILTER_ALL)) {
-        results = searcher.searchAll(searchItem);
+        search = searcher.searchAll(searchItem);
       } else if (filter.equals(SEARCH_FILTER_CPE)) {
-        results = searcher.searchCpe(searchItem);
+        search = searcher.searchCpe(searchItem);
       } else if (filter.equals(SEARCH_FILTER_CVE)) {
-        results = searcher.searchCve(searchItem);
+        search = searcher.searchCve(searchItem);
       } else if (filter.equals(SEARCH_FILTER_CWE)) {
-        results = searcher.searchCwe(searchItem);
+        search = searcher.searchCwe(searchItem);
       } else {
-        results = searcher.searchAll(searchItem);
+        search = searcher.searchAll(searchItem);
       }
       
-      searcher.close();
-      return results;
+      search.addSearchListener(searchListener);
+      search.run();
     }
   }
 }

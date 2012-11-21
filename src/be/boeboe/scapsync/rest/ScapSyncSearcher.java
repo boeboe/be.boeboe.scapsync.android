@@ -1,19 +1,8 @@
 package be.boeboe.scapsync.rest;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,12 +14,10 @@ import be.boeboe.scapsync.rest.interfaces.IScapSyncCceDetails;
 import be.boeboe.scapsync.rest.interfaces.IScapSyncCpeDetails;
 import be.boeboe.scapsync.rest.interfaces.IScapSyncCveDetails;
 import be.boeboe.scapsync.rest.interfaces.IScapSyncCweDetails;
-import be.boeboe.scapsync.rest.interfaces.IScapSyncSearchPage;
 import be.boeboe.scapsync.rest.interfaces.IScapSyncSearchResult;
 import be.boeboe.scapsync.rest.interfaces.IScapSyncSearchResultType;
 import be.boeboe.scapsync.rest.interfaces.IScapSyncSearcher;
 import be.boeboe.scapsync.rest.interfaces.IScapSyncStats;
-import be.boeboe.scapsync.rest.search.ScapSyncSearchRest;
 import be.boeboe.scapsync.rest.stats.ScapSyncStatsRest;
 
 /**
@@ -38,11 +25,11 @@ import be.boeboe.scapsync.rest.stats.ScapSyncStatsRest;
  * @author boeboe
  */
 public class ScapSyncSearcher implements IScapSyncSearcher {
-  private static final URI SCAP_SYNC_BASE_URL = URI.create("http://scapsync.com");
+  public static final URI SCAP_SYNC_BASE_URL = URI.create("http://scapsync.com");
   private static final String SEARCH_PATTERN = "search_url";
   private static final String STATS_PATTERN = "stats_url";
   
-  private final DefaultHttpClient fHttpClient;
+  
   private URI fSearchBaseUri;
   private URI fQueryAllBaseUri;
   private URI fQueryCceBaseUri;
@@ -52,9 +39,7 @@ public class ScapSyncSearcher implements IScapSyncSearcher {
   private URI fStatsUri;
 
   public ScapSyncSearcher() {
-    fHttpClient = new DefaultHttpClient();
-    
-    JSONObject jsonMain = execRestGet(SCAP_SYNC_BASE_URL);
+    JSONObject jsonMain = ScapSyncUtils.execRestGet(SCAP_SYNC_BASE_URL);
     
     try {
       fSearchBaseUri = URI.create(jsonMain.getString(SEARCH_PATTERN));
@@ -77,36 +62,37 @@ public class ScapSyncSearcher implements IScapSyncSearcher {
   /**
    * @see be.boeboe.scapsync.rest.interfaces.IScapSyncSearcher#searchAll(java.lang.String)
    */
-  public IScapSyncSearchResult[] searchAll(String searchItem) {
-    return recursiveScapSyncSearchResult(fQueryAllBaseUri, searchItem);
+  public ScapSyncSearch searchAll(String searchItem) {
+    ScapSyncSearch search = new ScapSyncSearch(fQueryAllBaseUri, searchItem);
+    return search;
   }
 
   /**
    * @see be.boeboe.scapsync.rest.interfaces.IScapSyncSearcher#searchCce(java.lang.String)
    */
-  public IScapSyncSearchResult[] searchCce(String searchItem) {
-    return recursiveScapSyncSearchResult(fQueryCceBaseUri, searchItem);
+  public ScapSyncSearch searchCce(String searchItem) {
+    return new ScapSyncSearch(fQueryCceBaseUri, searchItem);
   }
 
   /**
    * @see be.boeboe.scapsync.rest.interfaces.IScapSyncSearcher#searchCpe(java.lang.String)
    */
-  public IScapSyncSearchResult[] searchCpe(String searchItem) {
-    return recursiveScapSyncSearchResult(fQueryCpeBaseUri, searchItem);
+  public ScapSyncSearch searchCpe(String searchItem) {
+    return new ScapSyncSearch(fQueryCpeBaseUri, searchItem);
   }
 
   /**
    * @see be.boeboe.scapsync.rest.interfaces.IScapSyncSearcher#searchCve(java.lang.String)
    */
-  public IScapSyncSearchResult[] searchCve(String searchItem) {
-    return recursiveScapSyncSearchResult(fQueryCveBaseUri, searchItem);
+  public ScapSyncSearch searchCve(String searchItem) {
+    return new ScapSyncSearch(fQueryCveBaseUri, searchItem);
   }
 
   /**
    * @see be.boeboe.scapsync.rest.interfaces.IScapSyncSearcher#searchCwe(java.lang.String)
    */
-  public IScapSyncSearchResult[] searchCwe(String searchItem) {
-    return recursiveScapSyncSearchResult(fQueryCweBaseUri, searchItem);
+  public ScapSyncSearch searchCwe(String searchItem) {
+    return new ScapSyncSearch(fQueryCweBaseUri, searchItem);
   }
 
 
@@ -118,7 +104,7 @@ public class ScapSyncSearcher implements IScapSyncSearcher {
       return null;
     } else {
       URI detailsUri = URI.create(SCAP_SYNC_BASE_URL + searchResult.getUrl());
-      JSONObject jsonDetailsResult = execRestGet(detailsUri);
+      JSONObject jsonDetailsResult = ScapSyncUtils.execRestGet(detailsUri);
       return new ScapSyncCceDetailsRest(jsonDetailsResult);
     }
   }
@@ -132,7 +118,7 @@ public class ScapSyncSearcher implements IScapSyncSearcher {
       return null;
     } else {
       URI detailsUri = URI.create(SCAP_SYNC_BASE_URL + searchResult.getUrl());
-      JSONObject jsonDetailsResult = execRestGet(detailsUri);
+      JSONObject jsonDetailsResult = ScapSyncUtils.execRestGet(detailsUri);
       return new ScapSyncCpeDetailsRest(jsonDetailsResult);
     }
   }
@@ -146,7 +132,7 @@ public class ScapSyncSearcher implements IScapSyncSearcher {
       return null;
     } else {
       URI detailsUri = URI.create(SCAP_SYNC_BASE_URL + searchResult.getUrl());
-      JSONObject jsonDetailsResult = execRestGet(detailsUri);
+      JSONObject jsonDetailsResult = ScapSyncUtils.execRestGet(detailsUri);
       return new ScapSyncCveDetailsRest(jsonDetailsResult);
     }
   }
@@ -160,60 +146,9 @@ public class ScapSyncSearcher implements IScapSyncSearcher {
       return null;
     } else {
       URI detailsUri = URI.create(SCAP_SYNC_BASE_URL + searchResult.getUrl());
-      JSONObject jsonDetailsResult = execRestGet(detailsUri);
+      JSONObject jsonDetailsResult = ScapSyncUtils.execRestGet(detailsUri);
       return new ScapSyncCweDetailsRest(jsonDetailsResult);
     }
-  }
-  
-  private JSONObject execRestGet(URI uri) {
-    HttpGet request = new HttpGet(uri);
-    request.addHeader("Accept", "application/json");
-
-    try {
-      HttpResponse response = fHttpClient.execute(request);
-      if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-        throw new RuntimeException("Unexpected server response "
-           + response.getStatusLine() + " for " + request.getRequestLine());
-      }
-      
-      InputStream inputStream = response.getEntity().getContent();
-      InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-      BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-      StringBuilder stringBuilder = new StringBuilder();
-      
-      String line;
-      while ((line = bufferedReader.readLine()) != null) {
-        stringBuilder.append(line);
-      }
-      
-      String output = stringBuilder.toString();
-      JSONObject json = new JSONObject(output);
-      return json;
-    } catch (IOException e) {
-      e.printStackTrace();
-      throw new RuntimeException("Problem reading remote response for " + request.getRequestLine(), e);
-    } catch (JSONException e) {
-      e.printStackTrace();
-      throw new RuntimeException("Problem JSONParsing remote response for " + request.getRequestLine(), e);
-    }
-  }
-
-  private IScapSyncSearchResult[] recursiveScapSyncSearchResult(URI baseUri, 
-      String searchItem) {
-    List<IScapSyncSearchResult> resultList = new ArrayList<IScapSyncSearchResult>();
-    
-    URI queryUri = URI.create(baseUri + searchItem);
-    JSONObject jsonFirstResult = execRestGet(queryUri);
-    ScapSyncSearchRest firstResult = new ScapSyncSearchRest(jsonFirstResult);
-    
-    for (IScapSyncSearchPage page : firstResult.getPages() ) {
-      URI pageUri = URI.create(SCAP_SYNC_BASE_URL + page.getUrl());
-      JSONObject jsonResult = execRestGet(pageUri);
-      ScapSyncSearchRest result = new ScapSyncSearchRest(jsonResult);
-      resultList.addAll(Arrays.asList(result.getResults()));
-    }
-    
-    return resultList.toArray(new IScapSyncSearchResult[resultList.size()]);
   }
 
   /**
@@ -221,7 +156,7 @@ public class ScapSyncSearcher implements IScapSyncSearcher {
    */
   @Override
   public void close() {
-    fHttpClient.getConnectionManager().shutdown();
+    
   }
 
   /**
@@ -229,7 +164,7 @@ public class ScapSyncSearcher implements IScapSyncSearcher {
    */
   @Override
   public Map<String, Integer> getStatistics() {
-    IScapSyncStats stats = new ScapSyncStatsRest(execRestGet(fStatsUri));
+    IScapSyncStats stats = new ScapSyncStatsRest(ScapSyncUtils.execRestGet(fStatsUri));
     return stats.getStatistics();
   }
 }
