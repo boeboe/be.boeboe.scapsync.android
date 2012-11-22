@@ -25,7 +25,7 @@ public class ScapSyncSearchSortFieldRest implements IScapSyncSearchSortField {
   public ScapSyncSearchSortFieldRest(JSONObject scapSyncSearchSortFieldRest) {
     super();
     try {
-      fSelected = Boolean.getBoolean(scapSyncSearchSortFieldRest.getString(SELECTED));
+      fSelected = Boolean.parseBoolean(scapSyncSearchSortFieldRest.getString(SELECTED));
       fName = scapSyncSearchSortFieldRest.getString(NAME);
     } catch (JSONException e) {
       e.printStackTrace();

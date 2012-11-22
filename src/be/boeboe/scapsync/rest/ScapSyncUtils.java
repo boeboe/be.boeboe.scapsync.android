@@ -101,17 +101,17 @@ public class ScapSyncUtils {
         throw new RuntimeException("Unexpected server response "
            + response.getStatusLine() + " for " + request.getRequestLine());
       }
-      
+
       InputStream inputStream = response.getEntity().getContent();
       InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
       BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
       StringBuilder stringBuilder = new StringBuilder();
-      
+
       String line;
       while ((line = bufferedReader.readLine()) != null) {
         stringBuilder.append(line);
       }
-      
+
       String output = stringBuilder.toString();
       JSONObject json = new JSONObject(output);
       httpClient.getConnectionManager().shutdown();

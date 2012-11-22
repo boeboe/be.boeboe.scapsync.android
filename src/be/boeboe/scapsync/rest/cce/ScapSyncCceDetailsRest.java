@@ -42,7 +42,7 @@ public class ScapSyncCceDetailsRest implements IScapSyncCceDetails {
   public ScapSyncCceDetailsRest(JSONObject scapSyncCceDetailsRest) {
     try {
       fDescription = scapSyncCceDetailsRest.getString(DESCRIPTION);
-      fDepricated = Boolean.getBoolean(scapSyncCceDetailsRest.getString(DEPRICATED));
+      fDepricated = Boolean.parseBoolean(scapSyncCceDetailsRest.getString(DEPRICATED));
       fVersionCount = scapSyncCceDetailsRest.getInt(VERSION_COUNT);
       fUpstreamModified = ScapSyncUtils.getDate(scapSyncCceDetailsRest.getString(UPSTREAM_MODIFIED));
       fPlatform = scapSyncCceDetailsRest.getString(PLATFORM);

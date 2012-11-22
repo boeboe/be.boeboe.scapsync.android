@@ -29,7 +29,7 @@ public class ScapSyncSearchFacetRest implements IScapSyncSearchFacet {
   public ScapSyncSearchFacetRest(JSONObject scapSyncSearchFacetRest) {
     super();
     try {
-      fSelected = Boolean.getBoolean(scapSyncSearchFacetRest.getString(SELECTED));
+      fSelected = Boolean.parseBoolean(scapSyncSearchFacetRest.getString(SELECTED));
       fName = scapSyncSearchFacetRest.getString(NAME);
       fUrl = scapSyncSearchFacetRest.getString(URL);
     } catch (JSONException e) {

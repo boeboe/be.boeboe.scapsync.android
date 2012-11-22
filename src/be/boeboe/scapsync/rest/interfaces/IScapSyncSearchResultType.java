@@ -6,7 +6,8 @@ public enum IScapSyncSearchResultType {
   TYPE_CCE_RESOURCE("cce_resource"),
   TYPE_CPE("cpe"),
   TYPE_CVE("cve"),
-  TYPE_CWE("cwe");
+  TYPE_CWE("cwe"),
+  PREFIX("&solrDocumentType=");
 
   private String fScapSyncSearchResultType;
 

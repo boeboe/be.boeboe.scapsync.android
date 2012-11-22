@@ -20,12 +20,12 @@ public class ScapSyncSearch extends Thread {
   
   private static IScapSyncSearch fFirstResult;
   private LinkedList<ScapSyncSearchListener> searchListeners = new LinkedList<ScapSyncSearchListener>();
-  private URI fBaseUri;
-  private String fSearchItem;
+  
   
   public ScapSyncSearch(URI baseUri, String searchItem) {
-    fBaseUri = baseUri;
-    fSearchItem = searchItem;
+    URI queryUri = URI.create(baseUri + "&q=" + searchItem + "&n=100");
+    JSONObject jsonFirstResult = ScapSyncUtils.execRestGet( queryUri);
+    fFirstResult = new ScapSyncSearchRest(jsonFirstResult);
   }
   
   private void search(URI pageUri) {
@@ -37,12 +37,9 @@ public class ScapSyncSearch extends Thread {
     }
   }
 
-  public void run(){
-    URI queryUri = URI.create(fBaseUri + fSearchItem + "&n=100");
-    JSONObject jsonFirstResult = ScapSyncUtils.execRestGet(queryUri);
-    fFirstResult = new ScapSyncSearchRest(jsonFirstResult);
+  public void run(){   
     for (IScapSyncSearchPage page : fFirstResult.getPages() ) {
-      URI pageUri = URI.create(ScapSyncSearcher.SCAP_SYNC_BASE_URL + page.getUrl());
+      URI pageUri = URI.create(ScapSyncHandle.SCAP_SYNC_BASE_URL + page.getUrl());
       search(pageUri);
     }
   }      

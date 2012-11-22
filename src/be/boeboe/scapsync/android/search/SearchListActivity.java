@@ -10,10 +10,11 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.Toast;
 import be.boeboe.scapsync.android.R;
+import be.boeboe.scapsync.rest.ScapSyncHandle;
 import be.boeboe.scapsync.rest.ScapSyncSearch;
 import be.boeboe.scapsync.rest.ScapSyncSearchListener;
-import be.boeboe.scapsync.rest.ScapSyncSearcher;
 import be.boeboe.scapsync.rest.interfaces.IScapSyncSearchResult;
+import be.boeboe.scapsync.rest.interfaces.IScapSyncSearchResultType;
 
 public class SearchListActivity extends ListActivity {
   public static String SEARCH_TERM = "search_term";
@@ -70,7 +71,7 @@ public class SearchListActivity extends ListActivity {
     }
 
     private void doSearch(String searchItem, String filter) {
-      ScapSyncSearcher searcher = new ScapSyncSearcher();
+      ScapSyncHandle scapSyncHandle = new ScapSyncHandle();
       ScapSyncSearch search;
       ScapSyncSearchListener searchListener = new ScapSyncSearchListener() {
         public void resultReceived(IScapSyncSearchResult[] searchResults) {
@@ -79,15 +80,15 @@ public class SearchListActivity extends ListActivity {
       };
 
       if (filter.equals(SEARCH_FILTER_ALL)) {
-        search = searcher.searchAll(searchItem);
+        search = scapSyncHandle.search(searchItem, null, null);
       } else if (filter.equals(SEARCH_FILTER_CPE)) {
-        search = searcher.searchCpe(searchItem);
+        search = scapSyncHandle.search(searchItem, IScapSyncSearchResultType.TYPE_CPE, null);
       } else if (filter.equals(SEARCH_FILTER_CVE)) {
-        search = searcher.searchCve(searchItem);
+        search = scapSyncHandle.search(searchItem, IScapSyncSearchResultType.TYPE_CVE, null);
       } else if (filter.equals(SEARCH_FILTER_CWE)) {
-        search = searcher.searchCwe(searchItem);
+        search = scapSyncHandle.search(searchItem, IScapSyncSearchResultType.TYPE_CWE, null);
       } else {
-        search = searcher.searchAll(searchItem);
+        search = scapSyncHandle.search(searchItem, null, null);
       }
       
       search.addSearchListener(searchListener);
