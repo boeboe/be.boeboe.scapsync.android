@@ -1,7 +1,6 @@
 package be.boeboe.scapsync.rest;
 
 import java.net.URI;
-import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,7 +17,6 @@ import be.boeboe.scapsync.rest.interfaces.IScapSyncCweDetails;
 import be.boeboe.scapsync.rest.interfaces.IScapSyncDailyFeed;
 import be.boeboe.scapsync.rest.interfaces.IScapSyncHandle;
 import be.boeboe.scapsync.rest.interfaces.IScapSyncSearchOrderFilter;
-import be.boeboe.scapsync.rest.interfaces.IScapSyncSearchResult;
 import be.boeboe.scapsync.rest.interfaces.IScapSyncSearchResultType;
 import be.boeboe.scapsync.rest.interfaces.IScapSyncStats;
 import be.boeboe.scapsync.rest.stats.ScapSyncStatsRest;
@@ -32,7 +30,6 @@ public class ScapSyncHandle implements IScapSyncHandle {
   
   private static final String SEARCH_URL = "search_url";
   private static final String STATS_URL = "stats_url";
-  private static final String ATOM_FEED = "atom_feed_url";
   private static final String DAILY_FEED = "daily_feed_url";
   private static final String CCE_URL_PATTERN = "cce_url_pattern";
   private static final String CPE_URL_PATTERN = "cpe_url_pattern";
@@ -60,10 +57,10 @@ public class ScapSyncHandle implements IScapSyncHandle {
       String cveUrlPattern = jsonMain.getString(CVE_URL_PATTERN);
       String cweUrlPattern = jsonMain.getString(CWE_URL_PATTERN);
       
-      fCceUri = URI.create(SCAP_SYNC_BASE_URL + cceUrlPattern.replace("/id", ""));
-      fCpeUri = URI.create(SCAP_SYNC_BASE_URL + cpeUrlPattern.replace("/id", ""));
-      fCveUri = URI.create(SCAP_SYNC_BASE_URL + cveUrlPattern.replace("/id", ""));
-      fCweUri = URI.create(SCAP_SYNC_BASE_URL + cweUrlPattern.replace("/id", ""));
+      fCceUri = URI.create(SCAP_SYNC_BASE_URL + cceUrlPattern.replace("/id", "/"));
+      fCpeUri = URI.create(SCAP_SYNC_BASE_URL + cpeUrlPattern.replace("/id", "/"));
+      fCveUri = URI.create(SCAP_SYNC_BASE_URL + cveUrlPattern.replace("/id", "/"));
+      fCweUri = URI.create(SCAP_SYNC_BASE_URL + cweUrlPattern.replace("/id", "/"));
     } catch (JSONException e) {
       throw new RuntimeException("Problem fetching base url patterns", e);
     }
@@ -87,68 +84,50 @@ public class ScapSyncHandle implements IScapSyncHandle {
     return new ScapSyncSearch(queryUri, searchItem);
   }
 
+
   /**
-   * @see be.boeboe.scapsync.rest.interfaces.IScapSyncHandle#searchCce(java.lang.String)
+   * @see be.boeboe.scapsync.rest.interfaces.IScapSyncHandle#getCceDetails(java.lang.String)
    */
-  public IScapSyncCceDetails getCceDetails(IScapSyncSearchResult searchResult) {
-    if (searchResult.getType() != IScapSyncSearchResultType.TYPE_CCE) {
-      return null;
-    } else {
-      URI detailsUri = URI.create(SCAP_SYNC_BASE_URL + searchResult.getUrl());
-      JSONObject jsonDetailsResult = ScapSyncUtils.execRestGet(detailsUri);
-      return new ScapSyncCceDetailsRest(jsonDetailsResult);
-    }
+  public IScapSyncCceDetails getCceDetails(String id) {
+    URI detailsUri = URI.create(fCceUri + id);
+    JSONObject jsonDetailsResult = ScapSyncUtils.execRestGet(detailsUri);
+    return new ScapSyncCceDetailsRest(jsonDetailsResult);
   }
   
   /**
-   * @see be.boeboe.scapsync.rest.interfaces.IScapSyncHandle#getCpeDetails(
-   *          be.boeboe.scapsync.rest.interfaces.IScapSyncSearchResult)
+   * @see be.boeboe.scapsync.rest.interfaces.IScapSyncHandle#getCpeDetails(java.lang.String)
    */
-  public IScapSyncCpeDetails getCpeDetails(IScapSyncSearchResult searchResult) {
-    if (searchResult.getType() != IScapSyncSearchResultType.TYPE_CPE) {
-      return null;
-    } else {
-      URI detailsUri = URI.create(SCAP_SYNC_BASE_URL + searchResult.getUrl());
-      JSONObject jsonDetailsResult = ScapSyncUtils.execRestGet(detailsUri);
-      return new ScapSyncCpeDetailsRest(jsonDetailsResult);
-    }
+  public IScapSyncCpeDetails getCpeDetails(String id) {
+    URI detailsUri = URI.create(fCpeUri + id);
+    JSONObject jsonDetailsResult = ScapSyncUtils.execRestGet(detailsUri);
+    return new ScapSyncCpeDetailsRest(jsonDetailsResult);
   }
 
   /**
-   * @see be.boeboe.scapsync.rest.interfaces.IScapSyncHandle#getCveDetails(
-   *          be.boeboe.scapsync.rest.interfaces.IScapSyncSearchResult)
+   * @see be.boeboe.scapsync.rest.interfaces.IScapSyncHandle#getCveDetails(java.lang.String)
    */
-  public IScapSyncCveDetails getCveDetails(IScapSyncSearchResult searchResult) {
-    if (searchResult.getType() != IScapSyncSearchResultType.TYPE_CVE) {
-      return null;
-    } else {
-      URI detailsUri = URI.create(SCAP_SYNC_BASE_URL + searchResult.getUrl());
-      JSONObject jsonDetailsResult = ScapSyncUtils.execRestGet(detailsUri);
-      return new ScapSyncCveDetailsRest(jsonDetailsResult);
-    }
+  public IScapSyncCveDetails getCveDetails(String id) {
+    URI detailsUri = URI.create(fCveUri + id);
+    JSONObject jsonDetailsResult = ScapSyncUtils.execRestGet(detailsUri);
+    return new ScapSyncCveDetailsRest(jsonDetailsResult);
   }
 
   /**
-   * @see be.boeboe.scapsync.rest.interfaces.IScapSyncHandle#getCweDetails(
-   *        be.boeboe.scapsync.rest.interfaces.IScapSyncSearchResult)
+   * @see be.boeboe.scapsync.rest.interfaces.IScapSyncHandle#getCweDetails(java.lang.String)
    */
-  public IScapSyncCweDetails getCweDetails(IScapSyncSearchResult searchResult) {
-    if (searchResult.getType() != IScapSyncSearchResultType.TYPE_CWE) {
-      return null;
-    } else {
-      URI detailsUri = URI.create(SCAP_SYNC_BASE_URL + searchResult.getUrl());
-      JSONObject jsonDetailsResult = ScapSyncUtils.execRestGet(detailsUri);
-      return new ScapSyncCweDetailsRest(jsonDetailsResult);
-    }
+  public IScapSyncCweDetails getCweDetails(String id) {
+    URI detailsUri = URI.create(fCweUri + id);
+    JSONObject jsonDetailsResult = ScapSyncUtils.execRestGet(detailsUri);
+    return new ScapSyncCweDetailsRest(jsonDetailsResult);
   }
 
   /**
    * @see be.boeboe.scapsync.rest.interfaces.IScapSyncHandle#getStatistics()
    */
   @Override
-  public Map<String, Integer> getStatistics() {
+  public IScapSyncStats getStatistics() {
     IScapSyncStats stats = new ScapSyncStatsRest(ScapSyncUtils.execRestGet(fStatsUri));
-    return stats.getStatistics();
+    return stats;
   }
 
   /**

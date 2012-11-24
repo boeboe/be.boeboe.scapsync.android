@@ -92,6 +92,10 @@ public class ScapSyncUtils {
   public static JSONObject execRestGet(URI uri) {
     final DefaultHttpClient httpClient;
     httpClient = new DefaultHttpClient();
+
+//    HttpHost proxy = new HttpHost("127.0.0.1", 3128);
+//    httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+
     HttpGet request = new HttpGet(uri);
     request.addHeader("Accept", "application/json");
 

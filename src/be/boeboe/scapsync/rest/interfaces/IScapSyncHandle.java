@@ -3,8 +3,6 @@
  */
 package be.boeboe.scapsync.rest.interfaces;
 
-import java.util.Map;
-
 import be.boeboe.scapsync.rest.ScapSyncSearch;
 
 /**
@@ -25,39 +23,38 @@ public interface IScapSyncHandle {
 
   /**
    * Get the full details of a CCE (Common Configuration Enumeration).
-   * @param searchResult the search result containing generic CCE data
+   * @param id the ID of the CCE
    * @return IScapSyncCceDetails the full details of this CCE
    */
-  // public IScapSyncCceDetails getCceDetails(IScapSyncSearchResult searchResult);
+  public IScapSyncCceDetails getCceDetails(String id);
   
   /**
    * Get the full details of a CPE (Common Platform Enumeration).
-   * @param searchResult the search result containing generic CPE data
+   * @param id the ID of the CPE
    * @return IScapSyncCpeDetails the full details of this CPE
    */
-  public IScapSyncCpeDetails getCpeDetails(IScapSyncSearchResult searchResult);
+  public IScapSyncCpeDetails getCpeDetails(String id);
   
   /**
    * Get the full details of a CVE (Common Vulnerabilities and Exposures).
-   * @param searchResult the search result containing generic CVE data
+   * @param id the ID of the CVE
    * @return IScapSyncCveDetails the full details of this CVE
    */
-  public IScapSyncCveDetails getCveDetails(IScapSyncSearchResult searchResult);
+  public IScapSyncCveDetails getCveDetails(String id);
   
   /**
    * Get the full details of a CWE (Common Weakness Enumeration).
-   * @param searchResult the search result containing generic CWE data
+   * @param id the ID of the CWE
    * @return IScapSyncCweDetails the full details of this CWE
    */
-  public IScapSyncCweDetails getCweDetails(IScapSyncSearchResult searchResult);
+  public IScapSyncCweDetails getCweDetails(String id);
   
   /**
    * Get full statistics of the available SCAP data.
-   * @param searchResult the search result containing generic CWE data
-   * @return IScapSyncCweDetails the full details of this CWE
+   * @return IScapSyncStats the full details of this CWE
    */
   
-  public Map<String, Integer> getStatistics();
+  public IScapSyncStats getStatistics();
 
   /**
    * Get the daily feeds from ScapSync.

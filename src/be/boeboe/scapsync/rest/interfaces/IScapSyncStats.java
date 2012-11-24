@@ -13,9 +13,21 @@ import java.util.Map;
 public interface IScapSyncStats {
 
   /**
-   * Get all SCAP statistics available.
+   * Get all SCAP statistics available (key, value).
    * @return hashMap Containing the statistics in key value pairs
    */  
   public Map<String, Integer> getStatistics();
 
+  /**
+   * Get the labels from the ScapSync statistics data.
+   * @return stringArray the labels from the ScapSync statistics data
+   */  
+  public String[] getLabels();
+
+
+  /**
+   * Get the title from the ScapSync statistics data.
+   * @return string the title from the ScapSync statistics data
+   */  
+  public String getTitle();
 }

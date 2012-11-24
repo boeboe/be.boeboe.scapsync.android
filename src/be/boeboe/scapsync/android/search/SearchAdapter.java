@@ -49,7 +49,7 @@ public class SearchAdapter extends ArrayAdapter<IScapSyncSearchResult> {
     navigateNext.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
-        System.out.println("Clicked: " + item.getUrl());
+        System.out.println("Clicked item '" + item.getId() + "' with URL " +  item.getUrl());
       }
     }); 
 
