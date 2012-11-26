@@ -133,11 +133,11 @@ public class StatsActivity extends Activity {
 
     @Override
     protected IScapSyncStats doInBackground(Void... params) {
-      IScapSyncStats stats = doStatslookup();
+      IScapSyncStats stats = doStatsLookup();
       return stats;
     }
 
-    private IScapSyncStats doStatslookup() {
+    private IScapSyncStats doStatsLookup() {
       ScapSyncHandle scapSyncHandle = new ScapSyncHandle();
       return scapSyncHandle.getStatistics();
     }
