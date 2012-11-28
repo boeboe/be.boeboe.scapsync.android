@@ -9,6 +9,8 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.SimpleOnPageChangeListener;
 import android.view.MenuItem;
 import be.boeboe.scapsync.android.R;
 import be.boeboe.scapsync.rest.ScapSyncHandle;
@@ -21,6 +23,17 @@ public class FeedsActivity extends Activity {
   private IScapSyncDailyFeed fScapDailyFeeds;
   private TabListener<NewListFragment> fNewTabListener;
   private TabListener<ChangedListFragment> fChangedTabListener;
+  private ActionBar fActionBar;
+  private static ViewPager fViewPager;
+  
+  private SimpleOnPageChangeListener fOnPageChangeListener = new SimpleOnPageChangeListener() {
+    @Override
+    public void onPageSelected(int position) {
+        // When swiping between pages, select the
+        // corresponding tab.
+        getActionBar().setSelectedNavigationItem(position);
+    }
+  };  
 
   @Override
   protected void onCreate(Bundle bundle) {
@@ -37,29 +50,32 @@ public class FeedsActivity extends Activity {
    * 
    */
   private void createMyActionBar() {
-    ActionBar actionBar = getActionBar();
-    actionBar.setTitle("Daily Feeds");
+    fActionBar = getActionBar();
+    fViewPager = new ViewPager(this);
+    fActionBar.setTitle("Daily Feeds");
     // actionBar.setSubtitle("Daily Feeds");
-    actionBar.setHomeButtonEnabled(true);
-    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+    fActionBar.setHomeButtonEnabled(true);
+    fActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
     //actionBar.setDisplayShowTitleEnabled(false);
 
-    fNewTab = actionBar.newTab();
-    fChangedTab = actionBar.newTab();
+    fNewTab = fActionBar.newTab();
+    fChangedTab = fActionBar.newTab();
 
     fNewTabListener = new TabListener<NewListFragment>(this, R.id.fragmentContainer, NewListFragment.class);
     fChangedTabListener = new TabListener<ChangedListFragment>(this, R.id.fragmentContainer,ChangedListFragment.class);
 
-    fNewTab.setText("New")
+    fNewTab.setText("New (" + fScapDailyFeeds.getNewItems().length + ")")
            .setContentDescription("New tab")
            .setTabListener(fNewTabListener);
 
-    fChangedTab.setText("Changed")
+    fChangedTab.setText("Changed (" + fScapDailyFeeds.getChangedItems().length + ")")
                .setContentDescription("Changed tab")
                .setTabListener(fChangedTabListener);
 
-    actionBar.addTab(fNewTab);
-    actionBar.addTab(fChangedTab);
+    fActionBar.addTab(fNewTab);
+    fActionBar.addTab(fChangedTab);
+    
+    fViewPager.setOnPageChangeListener(fOnPageChangeListener);
   }
   
   @Override
@@ -94,6 +110,7 @@ public class FeedsActivity extends Activity {
       } else {
         ft.attach(fFragment);
       }
+      fViewPager.setCurrentItem(tab.getPosition());
     }
 
     @Override

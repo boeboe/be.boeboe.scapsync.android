@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import be.boeboe.scapsync.android.R;
+import be.boeboe.scapsync.rest.interfaces.IScapSyncDailyFeed;
 import be.boeboe.scapsync.rest.interfaces.IScapSyncFeed;
 
 /**
@@ -24,12 +25,14 @@ public class NewListFragment extends ListFragment {
   private FeedsAdapter fFeedsAdapter;
   private FeedsActivity fFeedsActivity;
   private ListView fListView;
+  private IScapSyncDailyFeed fDailyFeed;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     ArrayList<IScapSyncFeed> feeds = new ArrayList<IScapSyncFeed>();
     fFeedsAdapter = new FeedsAdapter(getActivity(), android.R.id.list, feeds);
+    setRetainInstance(true);
   }
 
   @Override
@@ -41,6 +44,7 @@ public class NewListFragment extends ListFragment {
   public void onAttach(Activity activity) {
     super.onAttach(activity);
     fFeedsActivity = (FeedsActivity) activity;
+    fDailyFeed = fFeedsActivity.getDailyFeed();
   }
 
   @Override
@@ -57,7 +61,8 @@ public class NewListFragment extends ListFragment {
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
     fListView.setAdapter(fFeedsAdapter);
-    fFeedsAdapter.addAll(Arrays.asList(fFeedsActivity.getDailyFeed().getNewItems()));
+    fFeedsAdapter.clear();
+    fFeedsAdapter.addAll(Arrays.asList(fDailyFeed.getNewItems()));
     fFeedsAdapter.notifyDataSetChanged();
   }
 }
