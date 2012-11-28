@@ -46,7 +46,6 @@ public class SearchListActivity extends ListActivity {
     fListView.setDividerHeight(1);
   }
 
-
   private class SearchTask extends AsyncTask<String, IScapSyncSearchResult[], IScapSyncSearchResult[]> {
     @Override
     protected IScapSyncSearchResult[] doInBackground(String... params) {
@@ -90,7 +89,7 @@ public class SearchListActivity extends ListActivity {
       } else {
         search = scapSyncHandle.search(searchItem, null, null);
       }
-      
+
       search.addSearchListener(searchListener);
       search.run();
     }

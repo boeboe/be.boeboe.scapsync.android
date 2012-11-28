@@ -14,7 +14,6 @@ import be.boeboe.scapsync.android.R;
 import be.boeboe.scapsync.rest.ScapSyncHandle;
 import be.boeboe.scapsync.rest.interfaces.IScapSyncDailyFeed;
 
-
 public class FeedsActivity extends Activity {
   private Tab fNewTab;
   private Tab fChangedTab;
@@ -27,12 +26,10 @@ public class FeedsActivity extends Activity {
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
     setContentView(R.layout.activity_feeds);
-    
     new FeedsTask().execute();
   }
   
   public IScapSyncDailyFeed getDailyFeed() { 
-    System.out.println("FeedsActivity.getDailyFeed(): " + fScapDailyFeeds.getChangedItems().length);
     return fScapDailyFeeds;
   }
 
@@ -41,22 +38,22 @@ public class FeedsActivity extends Activity {
    */
   private void createMyActionBar() {
     ActionBar actionBar = getActionBar();
-    actionBar.setTitle("Scap Tool");
-    actionBar.setSubtitle("Daily Feeds");
+    actionBar.setTitle("Daily Feeds");
+    // actionBar.setSubtitle("Daily Feeds");
     actionBar.setHomeButtonEnabled(true);
     actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-    // actionBar.setDisplayShowTitleEnabled(false);
-    
+    //actionBar.setDisplayShowTitleEnabled(false);
+
     fNewTab = actionBar.newTab();
     fChangedTab = actionBar.newTab();
-   
-    fNewTabListener = new TabListener<NewListFragment>(this, R.id.fragmentContainer, NewListFragment.class, fScapDailyFeeds);
-    fChangedTabListener = new TabListener<ChangedListFragment>(this, R.id.fragmentContainer,ChangedListFragment.class, fScapDailyFeeds);
+
+    fNewTabListener = new TabListener<NewListFragment>(this, R.id.fragmentContainer, NewListFragment.class);
+    fChangedTabListener = new TabListener<ChangedListFragment>(this, R.id.fragmentContainer,ChangedListFragment.class);
 
     fNewTab.setText("New")
            .setContentDescription("New tab")
            .setTabListener(fNewTabListener);
-    
+
     fChangedTab.setText("Changed")
                .setContentDescription("Changed tab")
                .setTabListener(fChangedTabListener);
@@ -80,14 +77,12 @@ public class FeedsActivity extends Activity {
     private Activity fActivity;
     private Class<T> fFragmentClass;
     private int fFragmentContainer;
-    private IScapSyncDailyFeed fDailyFeeds;
 
     public TabListener(Activity activity, int fragmentContainer,
-        Class<T> fragmentClass, IScapSyncDailyFeed dailyFeeds) {
+        Class<T> fragmentClass) {
       fActivity = activity;
       fFragmentContainer = fragmentContainer;
       fFragmentClass = fragmentClass;
-      fDailyFeeds = dailyFeeds;
     }
 
     @Override
@@ -95,7 +90,6 @@ public class FeedsActivity extends Activity {
       if (fFragment == null) {
         String fragmentName = fFragmentClass.getName();
         fFragment = Fragment.instantiate(fActivity, fragmentName);
-        
         ft.add(fFragmentContainer, fFragment, fragmentName);
       } else {
         ft.attach(fFragment);
@@ -116,7 +110,7 @@ public class FeedsActivity extends Activity {
       }
     }
   }
-  
+
   private class FeedsTask extends AsyncTask<Void, IScapSyncDailyFeed, IScapSyncDailyFeed> {
     @Override
     protected void onPreExecute() {

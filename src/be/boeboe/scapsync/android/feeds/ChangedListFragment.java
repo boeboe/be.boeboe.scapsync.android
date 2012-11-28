@@ -24,7 +24,7 @@ public class ChangedListFragment extends ListFragment {
   private FeedsAdapter fFeedsAdapter;
   private FeedsActivity fFeedsActivity;
   private ListView fListView;
-  
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -46,22 +46,18 @@ public class ChangedListFragment extends ListFragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    //View view = inflater.inflate(R.layout.fragment_feeds, container, false);
-    //ListView list = (ListView)view.findViewById(R.id.feeds_list);
-
     View view = inflater.inflate(R.layout.activity_feeds, container, false);
     fListView = (ListView) view.findViewById(android.R.id.list);
+    fListView.setDivider(getResources().getDrawable(R.drawable.gradient));
+    fListView.setDividerHeight(1);
     return view;
   }
 
   @Override
-  public void onActivityCreated(Bundle savedInstanceState) 
-  {
-      super.onActivityCreated(savedInstanceState);
-      fListView.setAdapter(fFeedsAdapter);
-      
-      System.out.println("ChangedListFragment.onActivityCreated(): " + fFeedsActivity.getDailyFeed().getChangedItems().length);
-      fFeedsAdapter.addAll(Arrays.asList(fFeedsActivity.getDailyFeed().getChangedItems()));
-      fFeedsAdapter.notifyDataSetChanged();
+  public void onActivityCreated(Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+    fListView.setAdapter(fFeedsAdapter);
+    fFeedsAdapter.addAll(Arrays.asList(fFeedsActivity.getDailyFeed().getChangedItems()));
+    fFeedsAdapter.notifyDataSetChanged();
   }
 }

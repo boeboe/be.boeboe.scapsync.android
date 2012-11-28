@@ -21,27 +21,21 @@ import be.boeboe.scapsync.rest.interfaces.IScapSyncFeed;
  */
 public class FeedsAdapter extends ArrayAdapter<IScapSyncFeed> {
   private Context fContext;
-  private int fTextViewResourceId;
-  
+
   public FeedsAdapter(Context context, int textViewResourceId,
       ArrayList<IScapSyncFeed> feeds) {
     super(context, textViewResourceId, feeds);
     fContext = context;
-    fTextViewResourceId = textViewResourceId;
   }
 
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
     View root;
     final IScapSyncFeed feed = getItem(position);
-    
-    System.out.println("position == " + position);
-    System.out.println("getCount == " + getCount());
 
     if (null == convertView) {
       LayoutInflater inflater = ((Activity)fContext).getLayoutInflater();
       root = inflater.inflate(R.layout.activity_feeds_list, parent, false);
-      //root = LayoutInflater.from(fContext).inflate(fTextViewResourceId, (ViewGroup) convertView);
     } else {
       root = convertView;
     }
@@ -51,7 +45,6 @@ public class FeedsAdapter extends ArrayAdapter<IScapSyncFeed> {
 
     feedType.setText(feed.getDocType());
     feedTitle.setText(feed.getTitle());
-    
     return root;
   }
 

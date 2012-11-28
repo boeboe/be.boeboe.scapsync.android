@@ -30,7 +30,6 @@ public class NewListFragment extends ListFragment {
     super.onCreate(savedInstanceState);
     ArrayList<IScapSyncFeed> feeds = new ArrayList<IScapSyncFeed>();
     fFeedsAdapter = new FeedsAdapter(getActivity(), android.R.id.list, feeds);
-    
   }
 
   @Override
@@ -47,20 +46,18 @@ public class NewListFragment extends ListFragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    //View view = inflater.inflate(R.layout.fragment_feeds, container, false);
-    //ListView list = (ListView)view.findViewById(R.id.feeds_list);
-    
     View view = inflater.inflate(R.layout.activity_feeds, container, false);
     fListView = (ListView) view.findViewById(android.R.id.list);
+    fListView.setDivider(getResources().getDrawable(R.drawable.gradient));
+    fListView.setDividerHeight(1);
     return view;
   }
-  
+
   @Override
-  public void onActivityCreated(Bundle savedInstanceState) 
-  {
-      super.onActivityCreated(savedInstanceState);
-      fListView.setAdapter(fFeedsAdapter);
-      fFeedsAdapter.addAll(Arrays.asList(fFeedsActivity.getDailyFeed().getNewItems()));
-      fFeedsAdapter.notifyDataSetChanged();
+  public void onActivityCreated(Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+    fListView.setAdapter(fFeedsAdapter);
+    fFeedsAdapter.addAll(Arrays.asList(fFeedsActivity.getDailyFeed().getNewItems()));
+    fFeedsAdapter.notifyDataSetChanged();
   }
 }
