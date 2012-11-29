@@ -86,8 +86,6 @@ public class SearchActivity extends Activity {
   private OnClickListener searchButtonListener = new OnClickListener() {
     @Override
     public void onClick(View v) {
-      System.out.println("[1] Going to search for '" + fSearchTerm.getText()
-          + "' with filter " + getFilterName(fFilterSelected));
       Intent searchListIntent = new Intent(getApplicationContext(), SearchListActivity.class);
       searchListIntent.putExtra(SearchListActivity.SEARCH_TERM, fSearchTerm.getText().toString());
       searchListIntent.putExtra(SearchListActivity.SEARCH_FILTER, getFilterName(fFilterSelected));

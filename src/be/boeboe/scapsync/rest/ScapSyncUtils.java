@@ -3,6 +3,7 @@
  */
 package be.boeboe.scapsync.rest;
 
+import android.annotation.SuppressLint;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,6 +27,7 @@ import org.json.JSONObject;
  * @author boeboe
  *
  */
+@SuppressLint("SimpleDateFormat")
 public class ScapSyncUtils {
   
   /**
@@ -122,10 +124,12 @@ public class ScapSyncUtils {
       return json;
     } catch (IOException e) {
       httpClient.getConnectionManager().shutdown();
-      throw new RuntimeException("Problem reading remote response for " + request.getRequestLine(), e);
+      System.out.println("Problem reading remote response for " + request.getRequestLine());
+      return new JSONObject();
     } catch (JSONException e) {
       httpClient.getConnectionManager().shutdown();
-      throw new RuntimeException("Problem JSONParsing remote response for " + request.getRequestLine(), e);
+      System.out.println("Problem JSONParsing remote response for " + request.getRequestLine());
+      return new JSONObject();
     }
   }
 }

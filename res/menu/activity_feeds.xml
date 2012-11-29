@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	
+  <item android:id="@+id/menu_previous"
+        android:title="@string/menu_previous"
+        android:icon="@drawable/rewind"
+        android:showAsAction="ifRoom" />
+  
+  <item android:id="@+id/menu_date"
+        android:title="@string/menu_date"
+        android:showAsAction="ifRoom" />  
+  
+	<item android:id="@+id/menu_calender"
+			  android:title="@string/menu_calender"
+			  android:icon="@drawable/calender"
+			  android:showAsAction="ifRoom" />
+	
+	<item android:id="@+id/menu_next"
+        android:title="@string/menu_next"
+        android:icon="@drawable/forward"
+        android:showAsAction="ifRoom" />
+
+</menu>

@@ -35,7 +35,7 @@ public class FeedsAdapter extends ArrayAdapter<IScapSyncFeed> {
 
     if (null == convertView) {
       LayoutInflater inflater = ((Activity)fContext).getLayoutInflater();
-      root = inflater.inflate(R.layout.activity_feeds_list, parent, false);
+      root = inflater.inflate(R.layout.row_feeds_list, parent, false);
     } else {
       root = convertView;
     }

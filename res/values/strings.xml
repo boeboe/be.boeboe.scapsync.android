@@ -27,5 +27,8 @@
   <string name="newest_first">Modification Date (Newest First)</string>
   <string name="oldest_first">Modification Date (Oldest First)</string>
   <string name="most_relevant">Most Relevant</string>
-
+  <string name="menu_previous">Previous</string>
+  <string name="menu_date">Today</string>
+  <string name="menu_calender">Calender</string>
+  <string name="menu_next">Next</string>
 </resources>

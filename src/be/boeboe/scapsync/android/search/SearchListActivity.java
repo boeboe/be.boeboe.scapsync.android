@@ -38,7 +38,7 @@ public class SearchListActivity extends ListActivity {
     fSearchTerm = getIntent().getStringExtra(SEARCH_TERM);
     fSearchFilter = getIntent().getStringExtra(SEARCH_FILTER);
     new SearchTask().execute(fSearchTerm);
-    fSearchAdapter = new SearchAdapter(this, R.layout.activity_search_list, fResults);
+    fSearchAdapter = new SearchAdapter(this, R.layout.row_search_list, fResults);
     setListAdapter(fSearchAdapter);
     fListView = getListView();
     

@@ -3,6 +3,8 @@
  */
 package be.boeboe.scapsync.rest.interfaces;
 
+import java.util.Date;
+
 import be.boeboe.scapsync.rest.ScapSyncSearch;
 
 /**
@@ -61,4 +63,10 @@ public interface IScapSyncHandle {
    * @return IScapSyncDailyFeed the daily feeds from ScapSync
    */
   public IScapSyncDailyFeed getDailyFeed();
+
+  /**
+   * Get the feeds from a certain date from ScapSync.
+   * @return IScapSyncDailyFeed the feeds on date from ScapSync
+   */
+  public IScapSyncDailyFeed getFeed(Date date);
 }
