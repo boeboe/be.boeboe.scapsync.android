@@ -42,9 +42,9 @@ public class FeedsActivity extends Activity {
   private static DateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
 
   @Override
-  protected void onCreate(Bundle bundle) {
-    super.onCreate(bundle);
-    setContentView(R.layout.activity_feeds);
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_feeds_list);
     fCalender = Calendar.getInstance();
     fTodayDate = fCalender.getTime();
     try {
@@ -72,7 +72,7 @@ public class FeedsActivity extends Activity {
   private void createMyActionBar() {
     fActionBar = getActionBar();
     fActionBar.removeAllTabs();
-    fActionBar.setTitle("Feeds");
+    fActionBar.setTitle(R.string.title_activity_feeds);
     fActionBar.setHomeButtonEnabled(true);
     fActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
     //actionBar.setDisplayShowTitleEnabled(false);

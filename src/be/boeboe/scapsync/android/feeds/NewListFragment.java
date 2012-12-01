@@ -50,7 +50,7 @@ public class NewListFragment extends ListFragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.activity_feeds, container, false);
+    View view = inflater.inflate(R.layout.activity_feeds_list, container, false);
     fListView = (ListView) view.findViewById(android.R.id.list);
     fListView.setDivider(getResources().getDrawable(R.drawable.gradient));
     fListView.setDividerHeight(1);

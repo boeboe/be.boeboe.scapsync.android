@@ -4,10 +4,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.ListView;
 import android.widget.Toast;
 import be.boeboe.scapsync.android.R;
 import be.boeboe.scapsync.rest.ScapSyncHandle;
@@ -24,29 +29,148 @@ public class SearchListActivity extends ListActivity {
   public static String SEARCH_FILTER_CVE = "search_filter_cve";
   public static String SEARCH_FILTER_CWE = "search_filter_cwe";
 
-  private SearchAdapter fSearchAdapter;
+  private ProgressDialog fProgressDialog;
+  private ActionBar fActionBar;
   private ArrayList<IScapSyncSearchResult> fResults = new ArrayList<IScapSyncSearchResult>();
-  private ListView fListView;
   private String fSearchTerm;
   private String fSearchFilter;
+  private Tab fCceTab;
+  private Tab fCpeTab;
+  private Tab fCveTab;
+  private Tab fCweTab;
+  private TabListener<SearchListFragment> fCceSearchResultTabListener;
+  private TabListener<SearchListFragment> fCpeSearchResultTabListener;
+  private TabListener<SearchListFragment> fCveSearchResultTabListener;
+  private TabListener<SearchListFragment> fCweSearchResultTabListener;
 
   @SuppressLint("NewApi")
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_search_list);
  
     fSearchTerm = getIntent().getStringExtra(SEARCH_TERM);
     fSearchFilter = getIntent().getStringExtra(SEARCH_FILTER);
     new SearchTask().execute(fSearchTerm);
-    fSearchAdapter = new SearchAdapter(this, R.layout.row_search_list, fResults);
-    setListAdapter(fSearchAdapter);
-    fListView = getListView();
+  }
+
+  public ArrayList<IScapSyncSearchResult> getResults() { 
+    return fResults;
+  }
+
+  private void createMyActionBar() {
+    fActionBar = getActionBar();
+    fActionBar.removeAllTabs();
+    fActionBar.setTitle(R.string.title_activity_search_list);
+    fActionBar.setHomeButtonEnabled(true);
+    fActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
     
-    fListView.setDivider(getResources().getDrawable(R.drawable.gradient));
-    fListView.setDividerHeight(1);
+    fCceTab = fActionBar.newTab();
+    fCpeTab = fActionBar.newTab();
+    fCveTab = fActionBar.newTab();
+    fCweTab = fActionBar.newTab();
+    
+    fCceSearchResultTabListener = new TabListener<SearchListFragment>(this, R.id.fragmentContainer, SearchListFragment.class,"cce");
+    fCpeSearchResultTabListener = new TabListener<SearchListFragment>(this, R.id.fragmentContainer, SearchListFragment.class,"cpe");
+    fCveSearchResultTabListener = new TabListener<SearchListFragment>(this, R.id.fragmentContainer, SearchListFragment.class,"cve");
+    fCweSearchResultTabListener = new TabListener<SearchListFragment>(this, R.id.fragmentContainer, SearchListFragment.class,"cwe");
+    
+    fCceTab.setText("CCE (" + fResults.size() + ")")
+    .setContentDescription("CCE Tab")
+    .setTabListener(fCceSearchResultTabListener);
+
+    fCpeTab.setText("CPE (" + fResults.size() + ")")
+    .setContentDescription("CPE Tab")
+    .setTabListener(fCpeSearchResultTabListener);
+
+    fCveTab.setText("CVE (" + fResults.size() + ")")
+    .setContentDescription("CVE Tab")
+    .setTabListener(fCveSearchResultTabListener);
+
+    fCweTab.setText("CWE (" + fResults.size() + ")")
+    .setContentDescription("CWE Tab")
+    .setTabListener(fCweSearchResultTabListener);
+
+    fActionBar.addTab(fCceTab);
+    fActionBar.addTab(fCpeTab);
+    fActionBar.addTab(fCveTab);
+    fActionBar.addTab(fCweTab);
+  }
+
+  private void updateMyActionBar() {
+    int countCce = 0;
+    int countCpe = 0;
+    int countCve = 0;
+    int countCwe = 0;
+    for (IScapSyncSearchResult res: fResults) {
+      if ( res.getType().equals(IScapSyncSearchResultType.TYPE_CCE) ) { countCce++ ; }
+      else if ( res.getType().equals(IScapSyncSearchResultType.TYPE_CPE) ) { countCpe++ ; }
+      else if ( res.getType().equals(IScapSyncSearchResultType.TYPE_CVE) ) { countCve++ ; }
+      else if ( res.getType().equals(IScapSyncSearchResultType.TYPE_CWE) ) { countCwe++ ; }
+    }
+    fCceTab.setText("CCE (" + countCce + ")");
+    fCpeTab.setText("CPE (" + countCpe + ")");
+    fCveTab.setText("CVE (" + countCve + ")");
+    fCweTab.setText("CWE (" + countCwe + ")");
+  }
+
+  public static class TabListener<T extends Fragment> implements ActionBar.TabListener {
+    private Fragment fFragment;
+    private Activity fActivity;
+    private Class<T> fFragmentClass;
+    private int fFragmentContainer;
+    private Bundle fFilter = new Bundle();
+
+    public TabListener(Activity activity, int fragmentContainer,
+        Class<T> fragmentClass, String filter) {
+      fActivity = activity;
+      fFragmentContainer = fragmentContainer;
+      fFragmentClass = fragmentClass;
+      fFilter.putString(SearchListFragment.FILTER, filter);;
+    }
+
+    @Override
+    public void onTabSelected(Tab tab, FragmentTransaction ft) {
+      if (fFragment == null) {
+        String fragmentName = fFragmentClass.getName();
+        fFragment = Fragment.instantiate(fActivity, fragmentName);
+        fFragment.setArguments(fFilter);
+        ft.add(fFragmentContainer, fFragment, fragmentName);
+        
+      } else {
+        ft.attach(fFragment);
+      }
+    }
+
+    @Override
+    public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+      if (fFragment != null) {
+        ft.detach(fFragment);
+      }
+    }
+
+    @Override
+    public void onTabReselected(Tab tab, FragmentTransaction ft) {
+      if (fFragment != null) {
+        ft.attach(fFragment);
+      }
+    }
   }
 
   private class SearchTask extends AsyncTask<String, IScapSyncSearchResult[], IScapSyncSearchResult[]> {
+    private boolean fFirstArrived = false;
+    
+    @Override
+    protected void onPreExecute() {
+      super.onPreExecute();
+      fProgressDialog = new ProgressDialog(SearchListActivity.this);
+      fProgressDialog.setMessage("Searching for '" + fSearchTerm + "'");
+      fProgressDialog.setIndeterminate(false);
+      fProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+      fProgressDialog.setCancelable(false);
+      fProgressDialog.show();
+    }
+    
     @Override
     protected IScapSyncSearchResult[] doInBackground(String... params) {
       if (params != null && params.length > 0 && params[0] != null) {
@@ -59,13 +183,18 @@ public class SearchListActivity extends ListActivity {
     @Override
     protected void onProgressUpdate(IScapSyncSearchResult[]... results) {
       super.onProgressUpdate(results);
-      fSearchAdapter.addAll(new ArrayList<IScapSyncSearchResult>(Arrays.asList(results[0])));
-      fSearchAdapter.notifyDataSetChanged();
+      if (!fFirstArrived) {
+        fProgressDialog.dismiss();
+        fFirstArrived = true;
+        createMyActionBar();
+      }
+      fResults.addAll(Arrays.asList(results[0]));
+      updateMyActionBar();
     }
 
     protected void onPostExecute(IScapSyncSearchResult[] res) {
       super.onPostExecute(res);
-      Toast.makeText(getApplicationContext(), "Search finished with " + fSearchAdapter.getCount() + " results",
+      Toast.makeText(getApplicationContext(), "Search finished with " + fResults.size() + " results",
           Toast.LENGTH_LONG).show();
     }
 

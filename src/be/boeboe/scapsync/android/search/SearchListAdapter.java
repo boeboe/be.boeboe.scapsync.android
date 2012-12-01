@@ -5,11 +5,12 @@ package be.boeboe.scapsync.android.search;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,15 +21,13 @@ import be.boeboe.scapsync.rest.interfaces.IScapSyncSearchResult;
  * @author boeboe
  *
  */
-public class SearchAdapter extends ArrayAdapter<IScapSyncSearchResult> {
+public class SearchListAdapter extends ArrayAdapter<IScapSyncSearchResult> {
   private Context fContext;
-  private int fTextViewResourceId;
 
-  public SearchAdapter(Context context, int textViewResourceId,
+  public SearchListAdapter(Context context, int textViewResourceId,
       ArrayList<IScapSyncSearchResult> results) {
     super(context, textViewResourceId, results);
     fContext = context;
-    fTextViewResourceId = textViewResourceId;
   }
 
   @Override
@@ -37,7 +36,8 @@ public class SearchAdapter extends ArrayAdapter<IScapSyncSearchResult> {
     final IScapSyncSearchResult item = getItem(position);
 
     if (null == convertView) {
-      root = LayoutInflater.from(fContext).inflate(fTextViewResourceId, (ViewGroup) convertView);
+      LayoutInflater inflater = ((Activity)fContext).getLayoutInflater();
+      root = inflater.inflate(R.layout.row_search_list, parent, false);
     } else {
       root = convertView;
     }
