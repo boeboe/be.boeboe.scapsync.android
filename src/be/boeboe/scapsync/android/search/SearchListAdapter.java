@@ -7,10 +7,13 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -54,8 +57,8 @@ public class SearchListAdapter extends ArrayAdapter<IScapSyncSearchResult> {
     }); 
 
     id.setText(item.getId());
-    titleText.setText(item.getSummaryText());
-
+    Spanned markedUpTitle = Html.fromHtml(item.getTitleText());
+    titleText.setText(markedUpTitle);
     return root;
   }
 }

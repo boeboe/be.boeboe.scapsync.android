@@ -3,7 +3,9 @@
  */
 package be.boeboe.scapsync.rest;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URLEncoder;
 import java.util.LinkedList;
 
 import org.json.JSONObject;
@@ -23,6 +25,11 @@ public class ScapSyncSearch extends Thread {
   
   
   public ScapSyncSearch(URI baseUri, String searchItem) {
+    try {
+      searchItem = URLEncoder.encode(searchItem, "ISO-8859-1");
+    } catch (UnsupportedEncodingException e) {
+      throw new RuntimeException("Problem urlEncoding searchItem'" + searchItem + "' as ISO-8859-1", e);
+    }
     URI queryUri = URI.create(baseUri + "&q=" + searchItem + "&n=100");
     JSONObject jsonFirstResult = ScapSyncUtils.execRestGet( queryUri);
     fFirstResult = new ScapSyncSearchRest(jsonFirstResult);
