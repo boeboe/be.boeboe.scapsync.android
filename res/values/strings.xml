@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
 	<string name="app_name">SCAP_Tool</string>
@@ -20,15 +21,25 @@
 	<string name="hello_world">Hello world!</string>
 	<string name="title_activity_search_list">Search Results</string>
 	<string name="filter_all">No filter</string>
-  <string name="filter_cpe">Common Platform Enumeration</string>
-  <string name="filter_cve">Common Vulnerabilities and Exposures</string>
-  <string name="filter_cwe">Common Weakness Enumeration</string>
-  <string name="to_search_details">Navigate to search result details</string>
-  <string name="newest_first">Modification Date (Newest First)</string>
-  <string name="oldest_first">Modification Date (Oldest First)</string>
-  <string name="most_relevant">Most Relevant</string>
-  <string name="menu_previous">Previous</string>
-  <string name="menu_date">Today</string>
-  <string name="menu_calender">Calender</string>
-  <string name="menu_next">Next</string>
+	<string name="filter_cpe">Common Platform Enumeration</string>
+	<string name="filter_cve">Common Vulnerabilities and Exposures</string>
+	<string name="filter_cwe">Common Weakness Enumeration</string>
+	<string name="to_search_details">Navigate to search result details</string>
+	<string name="newest_first">Modification Date (Newest First)</string>
+	<string name="oldest_first">Modification Date (Oldest First)</string>
+	<string name="most_relevant">Most Relevant</string>
+	<string name="menu_previous">Previous</string>
+	<string name="menu_date">Today</string>
+	<string name="menu_calender">Calender</string>
+	<string name="menu_next">Next</string>
+
+	<string name="title_activity_cve_details">Cve Details</string>
+	<string name="cve_full">Common Vulnerability Enumeration</string>
+	<string name="vulnerability_score">Vulnerability Score (CVSS):</string>
+	<string name="published_date">Published:</string>
+	<string name="modified_date">Modified:</string>
+	<string name="summary">Summary:</string>
+	<string name="vulnerability_score_details">Vulnerability Score Details:</string>
+	 
+
 </resources>

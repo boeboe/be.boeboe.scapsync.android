@@ -1,10 +1,99 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <style name="AppTheme" parent="android:Theme.Light" />
-
-  <style name="BlackTheme"> 
-  	<item name="android:background">@android:color/black</item>
-    <item name="android:textColor">@android:color/white</item>
+  <style name="BlackGreenTheme" parent="@android:style/Theme.Holo">
+      <item name="android:actionBarItemBackground">@drawable/selectable_background_blackgreentheme</item>
+      <item name="android:popupMenuStyle">@style/BlackGreenTheme_PopupMenu</item>
+      <item name="android:dropDownListViewStyle">@style/BlackGreenTheme_DropDownListView</item>
+      <item name="android:actionBarTabStyle">@style/BlackGreenTheme_ActionBarTabStyle</item>
+      <item name="android:actionDropDownStyle">@style/BlackGreenTheme_DropDownNav</item>
+      <item name="android:actionBarStyle">@style/BlackGreenTheme_transparent_ActionBar</item>
+      <item name="android:panelBackground">@drawable/menu_hardkey_panel_blackgreentheme</item>
+      <item name="android:editTextStyle">@style/BlackGreenTheme_EditText</item>
+	    <item name="android:autoCompleteTextViewStyle">@style/BlackGreenTheme_AutoCompleteTextView</item>
+	    <item name="android:radioButtonStyle">@style/BlackGreenTheme_RadioButton</item>
+	    <item name="android:buttonStyle">@style/BlackGreenTheme_Button</item>
+		  <item name="android:imageButtonStyle">@style/BlackGreenTheme_ImageButton</item>
+		  <item name="android:progressBarStyleHorizontal">@style/BlackGreenTheme_ProgressBar</item>
+	    <item name="android:ratingBarStyleSmall">@style/BlackGreenTheme_RatingBarSmall</item>
   </style>
- 
+
+  <style name="BlackGreenTheme_solid_ActionBar" parent="@android:style/Widget.Holo.ActionBar.Solid">
+      <item name="android:background">@drawable/ab_solid_blackgreentheme</item>
+      <item name="android:backgroundStacked">@drawable/ab_stacked_solid_blackgreentheme</item>
+      <item name="android:backgroundSplit">@drawable/ab_bottom_solid_blackgreentheme</item>
+      <item name="android:progressBarStyle">@style/BlackGreenTheme_ProgressBar</item>
+  </style>
+
+  <style name="BlackGreenTheme_transparent_ActionBar" parent="@android:style/Widget.Holo.ActionBar">
+      <item name="android:background">@drawable/ab_transparent_blackgreentheme</item>
+      <item name="android:progressBarStyle">@style/BlackGreenTheme_ProgressBar</item>
+  </style>
+
+  <style name="BlackGreenTheme_PopupMenu" parent="@android:style/Widget.Holo.ListPopupWindow">
+      <item name="android:popupBackground">@drawable/menu_dropdown_panel_blackgreentheme</item> 
+  </style>
+
+  <style name="BlackGreenTheme_DropDownListView" parent="@android:style/Widget.Holo.ListView.DropDown">
+      <item name="android:listSelector">@drawable/selectable_background_blackgreentheme</item>
+  </style>
+
+  <style name="BlackGreenTheme_ActionBarTabStyle" parent="@android:style/Widget.Holo.ActionBar.TabView">
+      <item name="android:background">@drawable/tab_indicator_ab_blackgreentheme</item>
+  </style>
+
+  <style name="BlackGreenTheme_DropDownNav" parent="@android:style/Widget.Holo.Spinner">
+      <item name="android:background">@drawable/spinner_background_ab_blackgreentheme</item>
+      <item name="android:popupBackground">@drawable/menu_dropdown_panel_blackgreentheme</item>
+      <item name="android:dropDownSelector">@drawable/selectable_background_blackgreentheme</item>
+  </style>
+  
+  <style name="BlackGreenTheme_ProgressBar" parent="@android:style/Widget.Holo.ProgressBar.Horizontal">
+      <item name="android:progressDrawable">@drawable/progress_horizontal_blackgreentheme</item>
+  </style>
+
+  <!-- this style is only referenced in a Light.DarkActionBar based theme -->
+  <style name="BlackGreenTheme.widget" parent="@android:style/Theme.Holo">
+      <item name="android:popupMenuStyle">@style/BlackGreenTheme_PopupMenu</item>
+      <item name="android:dropDownListViewStyle">@style/BlackGreenTheme_DropDownListView</item>
+  </style>
+
+  <style name="VulnerabilityScoreBar" parent="@android:style/Widget.RatingBar">
+      <item name="android:progressDrawable">@drawable/vulnerability_score_bar</item>
+      <item name="android:minHeight">30dip</item>
+      <item name="android:maxHeight">30dip</item>
+  </style>
+
+  <style name="BlackGreenTheme_EditText" parent="@android:style/Widget.EditText">
+    <item name="android:background">@drawable/edit_text_holo_dark</item>
+    <item name="android:textColor">#ffffff</item>
+  </style>
+
+  <style name="BlackGreenTheme_AutoCompleteTextView" parent="@android:style/Widget.AutoCompleteTextView">
+    <item name="android:dropDownSelector">@drawable/list_selector_holo_dark</item>
+    <item name="android:background">@drawable/edit_text_holo_dark</item>
+    <item name="android:textColor">#ffffff</item>
+  </style>
+
+  <style name="BlackGreenTheme_RadioButton" parent="@android:style/Widget.CompoundButton.RadioButton">
+      <item name="android:button">@drawable/btn_radio_holo_dark</item>
+  </style>
+
+  <style name="BlackGreenTheme_Button" parent="@android:style/android:Widget.Button">
+    <item name="android:background">@drawable/btn_default_holo_dark</item>
+    <item name="android:minHeight">48dip</item>
+    <item name="android:minWidth">64dip</item>
+    <item name="android:textColor">#ffffff</item>
+  </style>
+
+  <style name="BlackGreenTheme_ImageButton" parent="@android:style/android:Widget.ImageButton">
+    <item name="android:background">@drawable/btn_default_holo_dark</item>
+  </style>
+
+  <style name="BlackGreenTheme_RatingBarSmall">
+      <item name="android:progressDrawable">@drawable/ratingbar_small_holo_dark</item>
+      <item name="android:indeterminateDrawable">@drawable/ratingbar_small_holo_dark</item>
+      <item name="android:minHeight">16dip</item>
+      <item name="android:maxHeight">16dip</item>
+  </style>
+
 </resources>

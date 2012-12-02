@@ -7,18 +7,19 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import be.boeboe.scapsync.android.R;
 import be.boeboe.scapsync.rest.interfaces.IScapSyncSearchResult;
+import be.boeboe.scapsync.rest.interfaces.IScapSyncSearchResultType;
 
 /**
  * @author boeboe
@@ -52,7 +53,11 @@ public class SearchListAdapter extends ArrayAdapter<IScapSyncSearchResult> {
     navigateNext.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
-        System.out.println("Clicked item '" + item.getId() + "' with URL " +  item.getUrl());
+        if (item.getType().equals(IScapSyncSearchResultType.TYPE_CVE)) {
+          Intent cveDetailsIntent = new Intent(fContext.getApplicationContext(), CveDetailsActivity.class);
+          cveDetailsIntent.putExtra(CveDetailsActivity.CVE_ID, item.getId());
+          fContext.startActivity(cveDetailsIntent);
+        }
       }
     }); 
 

@@ -22,12 +22,12 @@ import be.boeboe.scapsync.rest.interfaces.IScapSyncSearchResult;
 import be.boeboe.scapsync.rest.interfaces.IScapSyncSearchResultType;
 
 public class SearchListActivity extends ListActivity {
-  public static String SEARCH_TERM = "search_term";
-  public static String SEARCH_FILTER = "search_filter";
-  public static String SEARCH_FILTER_ALL = "search_filter_all";
-  public static String SEARCH_FILTER_CPE = "search_filter_cpe";
-  public static String SEARCH_FILTER_CVE = "search_filter_cve";
-  public static String SEARCH_FILTER_CWE = "search_filter_cwe";
+  public final static String SEARCH_TERM = "search_term";
+  public final static String SEARCH_FILTER = "search_filter";
+  public final static String SEARCH_FILTER_ALL = "search_filter_all";
+  public final static String SEARCH_FILTER_CPE = "search_filter_cpe";
+  public final static String SEARCH_FILTER_CVE = "search_filter_cve";
+  public final static String SEARCH_FILTER_CWE = "search_filter_cwe";
 
   private ProgressDialog fProgressDialog;
   private ActionBar fActionBar;
@@ -52,6 +52,20 @@ public class SearchListActivity extends ListActivity {
     fSearchTerm = getIntent().getStringExtra(SEARCH_TERM);
     fSearchFilter = getIntent().getStringExtra(SEARCH_FILTER);
     new SearchTask().execute(fSearchTerm);
+  }
+
+  @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    outState.putString(SEARCH_TERM, fSearchTerm);
+    outState.putString(SEARCH_FILTER, fSearchFilter);
+  }
+
+  @Override
+  protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    super.onRestoreInstanceState(savedInstanceState);
+    fSearchTerm = savedInstanceState.getString(SEARCH_TERM);
+    fSearchFilter = savedInstanceState.getString(SEARCH_FILTER);
   }
 
   public ArrayList<IScapSyncSearchResult> getResults() { 

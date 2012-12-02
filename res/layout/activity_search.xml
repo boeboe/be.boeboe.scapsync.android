@@ -9,7 +9,7 @@
     <View android:layout_width="wrap_content" 
     	    android:background="@drawable/gradient"
     	    android:layout_height="1dp" />
-    
+
     <TextView android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:text="@string/search_item_seperator"
@@ -19,8 +19,7 @@
     <View android:layout_width="wrap_content"
           android:background="@drawable/gradient"
           android:layout_height="1dp" />
-    
-    
+
     <LinearLayout android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
                   android:orientation="horizontal"
@@ -40,7 +39,7 @@
                   android:background="@drawable/image_rounded"
                   android:layout_margin="2dip"
                   android:contentDescription="@string/reset_button" />
-       
+
        <ImageView android:id="@+id/search_button"
                   android:src="@drawable/search"
                   android:layout_width="wrap_content"
@@ -50,7 +49,6 @@
                   android:contentDescription="@string/search_button" />
     </LinearLayout>
 
-
     <ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content">
     	<LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
     		android:orientation="vertical" >
@@ -58,7 +56,7 @@
 		    <View android:layout_width="wrap_content"
 		          android:background="@drawable/gradient"
 		          android:layout_height="1dp" />
-		    
+
 		    <TextView android:layout_width="wrap_content"
 		              android:layout_height="wrap_content"
 					        android:text="@string/search_filter_seperator"
@@ -68,70 +66,70 @@
 		    <View android:layout_width="wrap_content"
 		          android:background="@drawable/gradient"
 		          android:layout_height="1dp" />
-		    
+
 		    <RadioGroup android:id="@+id/filter_select"
 						        android:layout_width="wrap_content"
 						        android:layout_height="wrap_content"
 						        android:orientation="vertical">
-		        
+
 				    <RadioButton android:id="@+id/filter_all"
 									       android:layout_width="wrap_content"
 									       android:layout_height="wrap_content"
 									       android:text="@string/filter_all"
 									       android:checked="true" />
-				    
+
 				    <RadioButton android:id="@+id/filter_cve"
 								         android:layout_width="wrap_content"
 								         android:layout_height="wrap_content"
 								         android:text="@string/filter_cve" />
-				    
+
 				    <RadioButton android:id="@+id/filter_cpe"
 								         android:layout_width="wrap_content"
 								         android:layout_height="wrap_content"
 								         android:text="@string/filter_cpe" />
-				    
+
 				    <RadioButton android:id="@+id/filter_cwe"
 								         android:layout_width="wrap_content"
 								         android:layout_height="wrap_content"
 								         android:text="@string/filter_cwe" />
 				</RadioGroup>
-		    
+
 		    <View android:layout_width="wrap_content"
 		          android:background="@drawable/gradient"
 		          android:layout_height="1dp" />
-		    
+
 		    <TextView android:layout_width="wrap_content"
 		              android:layout_height="wrap_content"
 		              android:text="@string/search_order_seperator"
 		              android:textAppearance="?android:attr/textAppearanceMedium"
 		              android:paddingLeft="10dip" />
-		
+
 		    <View android:layout_width="wrap_content"
 		          android:background="@drawable/gradient"
 		          android:layout_height="1dp" />
-		    
+
 		    <RadioGroup android:id="@+id/order_select"
 						        android:layout_width="wrap_content"
 						        android:layout_height="wrap_content"
 						        android:orientation="vertical">
-		
+
 		        <RadioButton android:id="@+id/newest_first"
 							           android:layout_width="wrap_content"
 							           android:layout_height="wrap_content"
 							           android:text="@string/newest_first"
 							           android:checked="true" />
-		        
+
 		        <RadioButton android:id="@+id/oldest_first"
 						             android:layout_width="wrap_content"
 						             android:layout_height="wrap_content"
 						             android:text="@string/oldest_first" />
-		        
+
 		        <RadioButton android:id="@+id/most_relevant"
 						             android:layout_width="wrap_content"
 						             android:layout_height="wrap_content"
 						             android:text="@string/most_relevant" />
 		    </RadioGroup>
-		    
+
       </LinearLayout>
     </ScrollView>
 </LinearLayout>

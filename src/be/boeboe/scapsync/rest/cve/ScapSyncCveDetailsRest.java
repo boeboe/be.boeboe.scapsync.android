@@ -40,7 +40,7 @@ public class ScapSyncCveDetailsRest implements IScapSyncCveDetails {
   
   private IScapSyncCvss fCvss;
   private String fCvssVector;
-  private double fCvssBaseScore;
+  private float fCvssBaseScore;
   private int fVersionCount;
   private Date fUpstreamModified;
   private Date fUpstreamPublished;
@@ -53,7 +53,7 @@ public class ScapSyncCveDetailsRest implements IScapSyncCveDetails {
     try {
       fCvss = scapSyncCveDetailsRest.has(CVSS) ? new ScapSyncCveCvssRest(scapSyncCveDetailsRest.getJSONObject(CVSS)) : null;
       fCvssVector = scapSyncCveDetailsRest.has(CVSS_VECTOR) ? scapSyncCveDetailsRest.getString(CVSS_VECTOR): null;
-      fCvssBaseScore = scapSyncCveDetailsRest.has(CVSS_BASE_SCORE) ? scapSyncCveDetailsRest.getDouble(CVSS_BASE_SCORE): 0;
+      fCvssBaseScore = scapSyncCveDetailsRest.has(CVSS_BASE_SCORE) ? (float) scapSyncCveDetailsRest.getDouble(CVSS_BASE_SCORE): 0;
       fVersionCount = scapSyncCveDetailsRest.getInt(VERSION_COUNT);
       fUpstreamModified = ScapSyncUtils.getDate(scapSyncCveDetailsRest.getString(UPSTREAM_MODIFIED));
       fUpstreamPublished = ScapSyncUtils.getDate(scapSyncCveDetailsRest.getString(UPSTREAM_PUBLISHED));
@@ -85,7 +85,7 @@ public class ScapSyncCveDetailsRest implements IScapSyncCveDetails {
    * @see be.boeboe.scapsync.rest.interfaces.IScapSyncCveDetails#getCvssBaseScore()
    */
   @Override
-  public double getCvssBaseScore() {
+  public float getCvssBaseScore() {
     return fCvssBaseScore;
   }
 

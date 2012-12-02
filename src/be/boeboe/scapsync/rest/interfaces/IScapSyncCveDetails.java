@@ -24,7 +24,7 @@ public interface IScapSyncCveDetails {
    * Get CVSS (Common Vulnerability Scoring System) Base Score from this CVE.
    * @return double the CVSS Base Score of this CVE
    */
-  public double getCvssBaseScore();
+  public float getCvssBaseScore();
   
   /**
    * Get Version Count from this CVE.
